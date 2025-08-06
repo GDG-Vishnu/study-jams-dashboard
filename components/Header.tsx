@@ -15,7 +15,7 @@ export function Header() {
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-p8wYqydbp5hEU4Iquhbhub3HeIsmWHKNUg&s"
               alt="Vitb"
-              className="h-10 w-10 rounded-full object-cover"
+              className="h-10 w-10 object-cover"
             />
             {/* Logo Text */}
             <div className="leading-tight">

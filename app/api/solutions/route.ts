@@ -9,6 +9,7 @@ interface Solution {
   labName: string;
   videoUrl: string;
   createdAt: string;
+  difficulty: "Easy" | "Medium" | "Hard";
 }
 
 export async function GET(request: NextRequest) {
@@ -39,6 +40,7 @@ export async function GET(request: NextRequest) {
       labName: solution.labName,
       videoUrl: solution.videoUrl,
       createdAt: solution.createdAt,
+      difficulty: solution.difficulty,
     }));
 
     return NextResponse.json(formattedSolutions);
@@ -54,11 +56,19 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { labName, videoUrl } = body;
+    const { labName, videoUrl, difficulty } = body;
 
-    if (!labName || !videoUrl) {
+    if (!labName || !videoUrl || !difficulty) {
       return NextResponse.json(
-        { error: "Lab name and video URL are required" },
+        { error: "Lab name, video URL and difficulty are required" },
+        { status: 400 }
+      );
+    }
+
+    const validDifficulties = ["Easy", "Medium", "Hard"];
+    if (!validDifficulties.includes(difficulty)) {
+      return NextResponse.json(
+        { error: "Invalid difficulty level" },
         { status: 400 }
       );
     }
@@ -80,6 +90,7 @@ export async function POST(request: NextRequest) {
     const newSolution = {
       labName: labName.trim(),
       videoUrl: videoUrl.trim(),
+      difficulty,
       createdAt: new Date().toISOString(),
     };
 

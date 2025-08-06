@@ -12,6 +12,7 @@ interface Solution {
   labName: string;
   videoUrl: string;
   createdAt: string;
+  difficulty: "Easy" | "Medium" | "Hard";
 }
 
 export default function Home() {
@@ -50,7 +51,7 @@ export default function Home() {
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center mb-4">
-            <h1 className="text-4xl font-bold">Google Cloud Cohort 2</h1>
+            <h1 className="text-4xl font-bold">Google Cloud Arcade Cohort 2</h1>
           </div>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
             Find and share YouTube video solutions for all your GCP lab
@@ -110,6 +111,7 @@ export default function Home() {
                     labName={solution.labName}
                     videoUrl={solution.videoUrl}
                     createdAt={solution.createdAt}
+                    difficulty={solution.difficulty}
                   />
                 ))}
               </div>

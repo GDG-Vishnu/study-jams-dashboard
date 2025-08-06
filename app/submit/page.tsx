@@ -1,37 +1,46 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Youtube, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Youtube, CheckCircle, AlertCircle } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function SubmitSolution() {
-  const [labName, setLabName] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
+  const [labName, setLabName] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [difficulty, setDifficulty] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
-      const response = await fetch('/api/solutions', {
-        method: 'POST',
+      const response = await fetch("/api/solutions", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           labName: labName.trim(),
           videoUrl: videoUrl.trim(),
+          difficulty,
         }),
       });
 
@@ -39,30 +48,32 @@ export default function SubmitSolution() {
 
       if (response.ok) {
         setSuccess(true);
-        setLabName('');
-        setVideoUrl('');
+        setLabName("");
+        setVideoUrl("");
+        setDifficulty("");
         setTimeout(() => {
-          router.push('/');
+          router.push("/");
         }, 2000);
       } else {
-        setError(data.error || 'Failed to submit solution');
+        setError(data.error || "Failed to submit solution");
       }
     } catch (error) {
-      setError('Network error. Please try again.');
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const isValidYouTubeUrl = (url: string) => {
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/)[\w-]+/;
+    const youtubeRegex =
+      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/)[\w-]+/;
     return youtubeRegex.test(url);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <Link
@@ -77,19 +88,25 @@ export default function SubmitSolution() {
         <Card className="shadow-lg">
           <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
             <Youtube className="h-12 w-12 mx-auto mb-4" />
-            <CardTitle className="text-2xl font-bold">Submit Lab Solution</CardTitle>
+            <CardTitle className="text-2xl font-bold">
+              Submit Lab Solution
+            </CardTitle>
             <p className="text-blue-100 mt-2">
               Share your YouTube video solution to help fellow students
             </p>
           </CardHeader>
-          
+
           <CardContent className="p-8">
             {success && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
                 <div>
-                  <p className="text-green-800 font-medium">Solution submitted successfully!</p>
-                  <p className="text-green-600 text-sm">Redirecting to homepage...</p>
+                  <p className="text-green-800 font-medium">
+                    Solution submitted successfully!
+                  </p>
+                  <p className="text-green-600 text-sm">
+                    Redirecting to homepage...
+                  </p>
                 </div>
               </div>
             )}
@@ -103,7 +120,10 @@ export default function SubmitSolution() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <Label htmlFor="labName" className="text-base font-medium text-gray-700">
+                <Label
+                  htmlFor="labName"
+                  className="text-base font-medium text-gray-700"
+                >
                   Lab Name *
                 </Label>
                 <Input
@@ -121,7 +141,36 @@ export default function SubmitSolution() {
               </div>
 
               <div>
-                <Label htmlFor="videoUrl" className="text-base font-medium text-gray-700">
+                <Label
+                  htmlFor="difficulty"
+                  className="text-base font-medium text-gray-700"
+                >
+                  Difficulty Level *
+                </Label>
+                <Select
+                  required
+                  value={difficulty}
+                  onValueChange={setDifficulty}
+                >
+                  <SelectTrigger className="mt-2 text-base">
+                    <SelectValue placeholder="Select a difficulty" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Easy">Easy</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="Hard">Hard</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="mt-1 text-sm text-gray-600">
+                  How difficult was this lab to complete?
+                </p>
+              </div>
+
+              <div>
+                <Label
+                  htmlFor="videoUrl"
+                  className="text-base font-medium text-gray-700"
+                >
                   YouTube Video URL *
                 </Label>
                 <Input
@@ -144,10 +193,14 @@ export default function SubmitSolution() {
               </div>
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-medium text-blue-900 mb-2">Submission Guidelines</h3>
+                <h3 className="font-medium text-blue-900 mb-2">
+                  Submission Guidelines
+                </h3>
                 <ul className="text-sm text-blue-800 space-y-1">
                   <li>• Make sure your video clearly shows the lab solution</li>
-                  <li>• Include the lab name in your video title or description</li>
+                  <li>
+                    • Include the lab name in your video title or description
+                  </li>
                   <li>• Ensure the video is publicly accessible</li>
                   <li>• Double-check the YouTube URL before submitting</li>
                 </ul>
@@ -155,7 +208,12 @@ export default function SubmitSolution() {
 
               <Button
                 type="submit"
-                disabled={loading || !labName.trim() || !isValidYouTubeUrl(videoUrl)}
+                disabled={
+                  loading ||
+                  !labName.trim() ||
+                  !isValidYouTubeUrl(videoUrl) ||
+                  !difficulty
+                }
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 text-base transition-colors duration-200"
               >
                 {loading ? (

@@ -1,12 +1,22 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Open_Sans } from "next/font/google";
+import { Inter, Open_Sans, Poppins, Figtree, DM_Sans } from "next/font/google";
 
 // const inter = Inter({ subsets: ["latin"] });
-const inter = Open_Sans({ subsets: ["latin"] });
+// const inter = Open_Sans({ subsets: ["latin"] });
+// const inter = Poppins({
+//   subsets: ["latin"],
+// });
+// const inter = Figtree({
+//   subsets: ["latin"],
+// });
+
+const inter = DM_Sans({
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "Google Cloud Cohort 2 - Lab Solutions",
+  title: "Google Cloud Arcade Cohort 2 - Lab Solutions",
   description:
     "Find and share YouTube video solutions for Google Cloud Platform lab exercises",
   keywords: ["Google Cloud", "GCP", "Lab Solutions", "YouTube", "Cohort 2"],
