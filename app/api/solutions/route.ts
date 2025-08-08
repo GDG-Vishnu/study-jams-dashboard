@@ -9,6 +9,7 @@ interface Solution {
   createdAt: string;
   difficulty: "Easy" | "Medium" | "Hard";
   comments?: string; // Optional comments field
+  postedBy?: string;
 }
 
 export async function GET(request: NextRequest) {
@@ -41,7 +42,8 @@ export async function GET(request: NextRequest) {
       videoUrl: solution.videoUrl,
       createdAt: solution.createdAt,
       difficulty: solution.difficulty,
-      comments: solution.comments || "", // Ensure comments are included in the response
+      comments: solution.comments || "",
+      postedBy: solution.postedBy || "",
     }));
 
     return NextResponse.json(formattedSolutions);
@@ -57,7 +59,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { labName, videoUrl, difficulty, comments } = body;
+    const { labName, videoUrl, difficulty, comments, postedBy } = body;
 
     if (!labName || !videoUrl || !difficulty) {
       return NextResponse.json(
@@ -93,6 +95,7 @@ export async function POST(request: NextRequest) {
       videoUrl: videoUrl.trim(),
       difficulty,
       comments: comments ? comments.trim() : "", // Store the optional comments
+      postedBy: postedBy ? postedBy.trim() : "", // Store the optional postedBy
       createdAt: new Date().toISOString(),
     };
 

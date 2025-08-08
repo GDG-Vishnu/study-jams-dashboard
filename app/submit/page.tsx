@@ -29,6 +29,7 @@ export default function SubmitSolution() {
   const [videoUrl, setVideoUrl] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [comments, setComments] = useState("");
+  const [postedBy, setPostedBy] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -49,6 +50,7 @@ export default function SubmitSolution() {
           videoUrl: videoUrl.trim(),
           difficulty,
           comments: comments.trim(),
+          postedBy: postedBy.trim(),
         }),
       });
 
@@ -60,6 +62,7 @@ export default function SubmitSolution() {
         setVideoUrl("");
         setDifficulty("");
         setComments("");
+        setPostedBy("");
         setTimeout(() => {
           router.push("/");
         }, 2000);
@@ -278,6 +281,25 @@ export default function SubmitSolution() {
                       Help others by sharing what you learned or challenges you
                       faced
                     </p>
+                  </div>
+                  <div className="space-y-3">
+                    <Label
+                      htmlFor="postedBy"
+                      className="text-base font-medium text-gray-700"
+                    >
+                      Posted By
+                      <span className="text-gray-400 font-normal ml-2">
+                        (Optional)
+                      </span>
+                    </Label>
+                    <Input
+                      id="postedBy"
+                      value={postedBy}
+                      onChange={(e) => setPostedBy(e.target.value)}
+                      placeholder="Your name (displayed as a contributor for this solution).."
+                      className="h-12 text-base border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500"
+                    />
+                    <p className="text-sm text-gray-500">Enter your name</p>
                   </div>
 
                   <Button

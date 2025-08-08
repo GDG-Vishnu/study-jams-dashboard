@@ -14,6 +14,7 @@ interface Solution {
   createdAt: string;
   difficulty: "Easy" | "Medium" | "Hard";
   comments?: string;
+  postedBy?: string;
 }
 
 export default function Home() {
@@ -205,6 +206,7 @@ export default function Home() {
                       createdAt={solution.createdAt}
                       difficulty={solution.difficulty}
                       comments={solution?.comments}
+                      postedBy={solution?.postedBy}
                     />
                   </div>
                 ))}

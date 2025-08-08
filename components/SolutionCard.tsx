@@ -23,6 +23,7 @@ interface SolutionCardProps {
   createdAt: string;
   difficulty: "Easy" | "Medium" | "Hard";
   comments?: string;
+  postedBy?: string;
 }
 
 export function SolutionCard({
@@ -31,6 +32,7 @@ export function SolutionCard({
   createdAt,
   difficulty,
   comments,
+  postedBy,
 }: SolutionCardProps) {
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -158,17 +160,30 @@ export function SolutionCard({
         </div>
 
         {/* Card Footer - Lab Info */}
+
         <div className="mt-5 pt-4 border-t border-gray-100">
-          <div className="flex items-center justify-between text-xs text-gray-500">
-            <div className="flex items-center">
-              <Youtube className="h-3.5 w-3.5 mr-1.5 text-red-500" />
-              <span>Video Solution Available</span>
-            </div>
-            <div className="flex items-center">
-              <Clock className="h-3.5 w-3.5 mr-1.5" />
-              <span>Click to watch</span>
-            </div>
-          </div>
+          {postedBy ? (
+            <>
+              <div className="flex items-center justify-center text-xs text-gray-500">
+                <div className="flex items-center">
+                  <span>Contributed by {postedBy}</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center justify-between text-xs text-gray-500">
+                <div className="flex items-center">
+                  <Youtube className="h-3.5 w-3.5 mr-1.5 text-red-500" />
+                  <span>Video Solution Available</span>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="h-3.5 w-3.5 mr-1.5" />
+                  <span>Click to watch</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </CardContent>
     </Card>
