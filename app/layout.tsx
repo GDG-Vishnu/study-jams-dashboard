@@ -6,6 +6,7 @@ import { Inter, Open_Sans, Poppins, Figtree, DM_Sans } from "next/font/google";
 // const inter = Open_Sans({ subsets: ["latin"] });
 // const inter = Poppins({
 //   subsets: ["latin"],
+//   weight: "500",
 // });
 // const inter = Figtree({
 //   subsets: ["latin"],

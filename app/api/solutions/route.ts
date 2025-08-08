@@ -34,9 +34,6 @@ export async function GET(request: NextRequest) {
       .sort({ createdAt: -1 }) // Sort by newest first
       .toArray();
 
-    // Log the solutions to ensure comments are being retrieved
-    console.log("Retrieved Solutions:", solutions);
-
     // Convert MongoDB _id to string and format the solutions
     const formattedSolutions = solutions.map((solution) => ({
       id: solution._id.toString(),
@@ -46,9 +43,6 @@ export async function GET(request: NextRequest) {
       difficulty: solution.difficulty,
       comments: solution.comments || "", // Ensure comments are included in the response
     }));
-
-    // Log the formatted solutions to verify the output
-    console.log("Formatted Solutions:", formattedSolutions);
 
     return NextResponse.json(formattedSolutions);
   } catch (error) {
@@ -108,7 +102,7 @@ export async function POST(request: NextRequest) {
       ...newSolution,
     };
 
-    console.log(createdSolution);
+    // console.log(createdSolution);
 
     return NextResponse.json(createdSolution, { status: 201 });
   } catch (error) {

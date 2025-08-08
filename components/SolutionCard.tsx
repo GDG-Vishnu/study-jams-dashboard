@@ -1,5 +1,11 @@
 "use client";
-import { ExternalLink, Youtube, MessageSquare, Clock } from "lucide-react";
+import {
+  ExternalLink,
+  Youtube,
+  MessageSquare,
+  Clock,
+  Calendar,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
@@ -8,6 +14,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface SolutionCardProps {
   labName: string;
@@ -26,84 +34,142 @@ export function SolutionCard({
 }: SolutionCardProps) {
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
-    return {
-      date: date.toLocaleDateString("en-US", {
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) {
+      return "Today";
+    } else if (diffDays === 1) {
+      return "Yesterday";
+    } else if (diffDays < 7) {
+      return `${diffDays} days ago`;
+    } else {
+      return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
-      }),
-      time: date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
+      });
+    }
   };
 
-  const { date, time } = formatDateTime(createdAt);
+  const difficultyConfig = {
+    Easy: {
+      color: "text-green-700",
+      bg: "bg-green-50",
+      border: "border-green-200",
+      dot: "bg-green-500",
+    },
+    Medium: {
+      color: "text-yellow-700",
+      bg: "bg-yellow-50",
+      border: "border-yellow-200",
+      dot: "bg-yellow-500",
+    },
+    Hard: {
+      color: "text-red-700",
+      bg: "bg-red-50",
+      border: "border-red-200",
+      dot: "bg-red-500",
+    },
+  };
 
-  // console.log(labName, videoUrl, createdAt, difficulty, comments);
+  const config = difficultyConfig[difficulty] || difficultyConfig.Easy;
 
-  const handleVideoClick = () => {
+  const handleOpenInNewTab = () => {
     window.open(videoUrl, "_blank", "noopener,noreferrer");
   };
 
-  const difficultyStyles = {
-    Easy: "bg-green-100 text-green-800 border-green-200",
-    Medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    Hard: "bg-red-100 text-red-800 border-red-200",
-  };
-
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500 hover:border-l-green-500">
-      <CardHeader className="pb-3">
-        <div className="flex justify-between items-start gap-2">
-          <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+    <Card className="group bg-white border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-2 hover:scale-[1.03] hover:border-blue-200">
+      {/* Card Header */}
+      <CardHeader className="p-6 pb-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/30 border-b border-gray-100">
+        <div className="flex justify-between items-start gap-3">
+          <CardTitle className="text-lg font-medium text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200 line-clamp-2">
             {labName}
           </CardTitle>
-          {difficulty && (
-            <span
-              className={`px-2.5 py-0.5 text-xs font-semibold rounded-full border whitespace-nowrap ${
-                difficultyStyles[difficulty] || difficultyStyles.Easy
-              }`}
-            >
-              {difficulty}
-            </span>
-          )}
+          <div
+            className={`flex items-center px-3 py-1.5 text-xs font-medium rounded-full border whitespace-nowrap ${config.bg} ${config.color} ${config.border} shadow-sm`}
+          >
+            <div className={`w-2 h-2 rounded-full mr-2 ${config.dot}`}></div>
+            {difficulty}
+          </div>
         </div>
-        <div className="flex items-center text-sm text-gray-500 mt-2">
-          <Clock className="h-4 w-4 mr-1" />
-          <span>
-            Added on {date} at {time}
-          </span>
+        <div className="flex items-center text-sm text-gray-500 mt-3">
+          <Calendar className="h-4 w-4 mr-2" />
+          <span>Added {formatDateTime(createdAt)}</span>
         </div>
       </CardHeader>
-      <CardContent>
-        <button
-          onClick={handleVideoClick}
-          className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 group"
-        >
-          <Youtube className="h-5 w-5" />
-          Watch Solution
-          <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-        </button>
-        {comments && (
-          <Dialog>
-            <DialogTrigger asChild>
-              <button className="mt-3 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                <MessageSquare className="h-4 w-4" />
-                View Comments
+
+      {/* Card Content */}
+      <CardContent className="p-6 pt-4">
+        <div className="space-y-3">
+          {comments ? (
+            <div className="grid grid-cols-2 gap-3">
+              {/* Watch Solution Button */}
+              <button
+                onClick={handleOpenInNewTab}
+                className="bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 border border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 font-medium p-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group/solution shadow-sm hover:shadow-md"
+              >
+                <Youtube className="h-4 w-4 group-hover/solution:scale-110 transition-transform" />
+                <span>{comments ? "Solution" : ""}</span>
               </button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Additional Comments</DialogTitle>
-              </DialogHeader>
-              <div className="mt-4">
-                <p className="text-gray-700">{comments}</p>
-              </div>
-            </DialogContent>
-          </Dialog>
-        )}
+
+              {/* Comments Button */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="bg-gradient-to-r from-emerald-50 to-blue-50 hover:from-emerald-100 hover:to-blue-100 border border-emerald-200 hover:border-emerald-300 text-emerald-700 hover:text-emerald-800 font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group/comment shadow-sm hover:shadow-md">
+                    <MessageSquare className="h-4 w-4 group-hover/comment:scale-110 transition-transform" />
+                    <span>View Tips</span>
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl bg-white rounded-2xl border-0 shadow-xl">
+                  <DialogHeader className="pb-4 border-b border-gray-100">
+                    <DialogTitle className="text-xl font-medium text-gray-900 flex items-center">
+                      <div className="bg-emerald-600 p-2 rounded-lg mr-3">
+                        <MessageSquare className="h-5 w-5 text-white" />
+                      </div>
+                      Additional Tips & Comments
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="pt-6">
+                    <div className="bg-gradient-to-r from-emerald-50 to-blue-50 p-6 rounded-xl border border-emerald-100">
+                      <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></div>
+                        Lab: {labName}
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                        {comments}
+                      </p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+          ) : (
+            <button
+              onClick={handleOpenInNewTab}
+              className="w-full bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 border border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 font-medium p-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group/solution shadow-sm hover:shadow-md"
+            >
+              <Youtube className="h-4 w-4 group-hover/solution:scale-110 transition-transform" />
+              <span>Watch Solution</span>
+            </button>
+          )}
+        </div>
+
+        {/* Card Footer - Lab Info */}
+        <div className="mt-5 pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-between text-xs text-gray-500">
+            <div className="flex items-center">
+              <Youtube className="h-3.5 w-3.5 mr-1.5 text-red-500" />
+              <span>Video Solution Available</span>
+            </div>
+            <div className="flex items-center">
+              <Clock className="h-3.5 w-3.5 mr-1.5" />
+              <span>Click to watch</span>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
