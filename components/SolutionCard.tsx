@@ -1,13 +1,20 @@
 "use client";
-
-import { ExternalLink, Youtube } from "lucide-react";
+import { ExternalLink, Youtube, MessageSquare, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface SolutionCardProps {
   labName: string;
   videoUrl: string;
   createdAt: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  comments?: string;
 }
 
 export function SolutionCard({
@@ -15,14 +22,26 @@ export function SolutionCard({
   videoUrl,
   createdAt,
   difficulty,
+  comments,
 }: SolutionCardProps) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return {
+      date: date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+      time: date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
   };
+
+  const { date, time } = formatDateTime(createdAt);
+
+  // console.log(labName, videoUrl, createdAt, difficulty, comments);
 
   const handleVideoClick = () => {
     window.open(videoUrl, "_blank", "noopener,noreferrer");
@@ -51,9 +70,12 @@ export function SolutionCard({
             </span>
           )}
         </div>
-        <p className="text-sm text-gray-500">
-          Added on {formatDate(createdAt)}
-        </p>
+        <div className="flex items-center text-sm text-gray-500 mt-2">
+          <Clock className="h-4 w-4 mr-1" />
+          <span>
+            Added on {date} at {time}
+          </span>
+        </div>
       </CardHeader>
       <CardContent>
         <button
@@ -64,6 +86,24 @@ export function SolutionCard({
           Watch Solution
           <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
         </button>
+        {comments && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="mt-3 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                <MessageSquare className="h-4 w-4" />
+                View Comments
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Additional Comments</DialogTitle>
+              </DialogHeader>
+              <div className="mt-4">
+                <p className="text-gray-700">{comments}</p>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
       </CardContent>
     </Card>
   );

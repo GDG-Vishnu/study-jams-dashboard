@@ -13,6 +13,7 @@ interface Solution {
   videoUrl: string;
   createdAt: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  comments?: string;
 }
 
 export default function Home() {
@@ -112,6 +113,7 @@ export default function Home() {
                     videoUrl={solution.videoUrl}
                     createdAt={solution.createdAt}
                     difficulty={solution.difficulty}
+                    comments={solution?.comments}
                   />
                 ))}
               </div>

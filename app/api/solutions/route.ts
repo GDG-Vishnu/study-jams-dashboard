@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
@@ -10,6 +8,7 @@ interface Solution {
   videoUrl: string;
   createdAt: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  comments?: string; // Optional comments field
 }
 
 export async function GET(request: NextRequest) {
@@ -29,19 +28,27 @@ export async function GET(request: NextRequest) {
       };
     }
 
+    // Fetch solutions from the database
     const solutions = await collection
       .find(query)
       .sort({ createdAt: -1 }) // Sort by newest first
       .toArray();
 
-    // Convert MongoDB _id to string and add id field for compatibility
+    // Log the solutions to ensure comments are being retrieved
+    console.log("Retrieved Solutions:", solutions);
+
+    // Convert MongoDB _id to string and format the solutions
     const formattedSolutions = solutions.map((solution) => ({
       id: solution._id.toString(),
       labName: solution.labName,
       videoUrl: solution.videoUrl,
       createdAt: solution.createdAt,
       difficulty: solution.difficulty,
+      comments: solution.comments || "", // Ensure comments are included in the response
     }));
+
+    // Log the formatted solutions to verify the output
+    console.log("Formatted Solutions:", formattedSolutions);
 
     return NextResponse.json(formattedSolutions);
   } catch (error) {
@@ -56,11 +63,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { labName, videoUrl, difficulty } = body;
+    const { labName, videoUrl, difficulty, comments } = body;
 
     if (!labName || !videoUrl || !difficulty) {
       return NextResponse.json(
-        { error: "Lab name, video URL and difficulty are required" },
+        { error: "Lab name, video URL, and difficulty are required" },
         { status: 400 }
       );
     }
@@ -91,15 +98,17 @@ export async function POST(request: NextRequest) {
       labName: labName.trim(),
       videoUrl: videoUrl.trim(),
       difficulty,
+      comments: comments ? comments.trim() : "", // Store the optional comments
       createdAt: new Date().toISOString(),
     };
 
     const result = await collection.insertOne(newSolution);
-
     const createdSolution = {
       id: result.insertedId.toString(),
       ...newSolution,
     };
+
+    console.log(createdSolution);
 
     return NextResponse.json(createdSolution, { status: 201 });
   } catch (error) {

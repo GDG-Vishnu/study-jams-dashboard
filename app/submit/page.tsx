@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -16,11 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function SubmitSolution() {
   const [labName, setLabName] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [comments, setComments] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -30,7 +31,6 @@ export default function SubmitSolution() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       const response = await fetch("/api/solutions", {
         method: "POST",
@@ -41,16 +41,18 @@ export default function SubmitSolution() {
           labName: labName.trim(),
           videoUrl: videoUrl.trim(),
           difficulty,
+          comments: comments.trim(),
         }),
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         setSuccess(true);
         setLabName("");
         setVideoUrl("");
         setDifficulty("");
+        setComments("");
         setTimeout(() => {
           router.push("/");
         }, 2000);
@@ -73,7 +75,6 @@ export default function SubmitSolution() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <Link
@@ -84,7 +85,6 @@ export default function SubmitSolution() {
             Back to Solutions
           </Link>
         </div>
-
         <Card className="shadow-lg">
           <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
             <Youtube className="h-12 w-12 mx-auto mb-4" />
@@ -95,7 +95,6 @@ export default function SubmitSolution() {
               Share your YouTube video solution to help fellow students
             </p>
           </CardHeader>
-
           <CardContent className="p-8">
             {success && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center">
@@ -110,14 +109,12 @@ export default function SubmitSolution() {
                 </div>
               </div>
             )}
-
             {error && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center">
                 <AlertCircle className="h-5 w-5 text-red-600 mr-3" />
                 <p className="text-red-800">{error}</p>
               </div>
             )}
-
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <Label
@@ -139,7 +136,6 @@ export default function SubmitSolution() {
                   Enter the name of the lab this solution covers
                 </p>
               </div>
-
               <div>
                 <Label
                   htmlFor="difficulty"
@@ -165,7 +161,6 @@ export default function SubmitSolution() {
                   How difficult was this lab to complete?
                 </p>
               </div>
-
               <div>
                 <Label
                   htmlFor="videoUrl"
@@ -191,7 +186,25 @@ export default function SubmitSolution() {
                   </p>
                 )}
               </div>
-
+              <div>
+                <Label
+                  htmlFor="comments"
+                  className="text-base font-medium text-gray-700"
+                >
+                  Additional Comments
+                </Label>
+                <Textarea
+                  id="comments"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  placeholder="Enter any additional comments or tips for completing the lab..."
+                  className="mt-2 text-base"
+                />
+                <p className="mt-1 text-sm text-gray-600">
+                  Provide any additional tips or things to be careful about
+                  while completing this lab
+                </p>
+              </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h3 className="font-medium text-blue-900 mb-2">
                   Submission Guidelines
@@ -205,7 +218,6 @@ export default function SubmitSolution() {
                   <li>• Double-check the YouTube URL before submitting</li>
                 </ul>
               </div>
-
               <Button
                 type="submit"
                 disabled={
