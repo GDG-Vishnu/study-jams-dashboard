@@ -166,7 +166,7 @@ export function SolutionCard({
             <>
               <div className="flex items-center justify-center text-xs text-gray-500">
                 <div className="flex items-center">
-                  <span>Contributed by {postedBy}</span>
+                  <span>Contributed by <strong>{postedBy}</strong></span>
                 </div>
               </div>
             </>
