@@ -37,8 +37,8 @@ export function Header() {
               height={40}
             />
             <div className="leading-tight">
-              <h1 className="text-lg font-semibold text-gray-900">GCP Cohort 2</h1>
-              <p className="text-xs text-gray-500">Skills Boost Dashboard</p>
+              <h1 className="text-lg font-semibold text-gray-900">Google Arcade Cohort 2</h1>
+              <p className="text-xs text-gray-500">Vishnu Institute of Technology</p>
             </div>
           </Link>
 

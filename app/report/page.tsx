@@ -297,34 +297,30 @@ const DataGrid = ({ data }: { data: ReportData[] }) => {
       </div>
 
       {/* Pagination */}
-      <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-        <div className="text-sm text-gray-600">
-          Showing {startIndex + 1} to{" "}
-          {Math.min(startIndex + rowsPerPage, sortedData.length)} of{" "}
-          {sortedData.length} entries
+        <div className="px-4 py-3 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="text-sm text-gray-600 text-center">
+                Showing {startIndex + 1} to {Math.min(startIndex + rowsPerPage, sortedData.length)} of {sortedData.length} entries
+            </div>
+            <div className="flex gap-2 justify-center">
+                <button
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                >
+                Previous
+                </button>
+                <span className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm min-w-[60px] text-center">
+                {currentPage} / {totalPages}
+                </span>
+                <button
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                >
+                Next
+                </button>
+            </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            Previous
-          </button>
-          <span className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm">
-            {currentPage} / {totalPages}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage(Math.min(totalPages, currentPage + 1))
-            }
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            Next
-          </button>
-        </div>
-      </div>
 
       {/* Row Detail Modal */}
       {selectedRow && (
