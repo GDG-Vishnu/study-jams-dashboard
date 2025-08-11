@@ -498,7 +498,7 @@ const Leaderboard = ({ data }: { data: LeaderboardEntry[] }) => {
           Top 3 Leaderboard
         </h3>
         <p className="text-sm text-gray-600 mt-1">
-          Based on total badges completed
+          Based on Arcade, Trivia, and Skill Badges completions
         </p>
       </div>
       <div className="p-4 space-y-3">
