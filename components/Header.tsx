@@ -16,8 +16,14 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/report", label: "Daily Report" },
-    { href: "https://garcade.in/calculator", label: "Arcade Calculator", external: true },
-    { href: "/submit", label: "Submit Solution", cta: true },
+    { href: "/skillBadges", label: "Skill Badges" },
+    {
+      href: "https://garcade.in/calculator",
+      label: "Arcade Calculator",
+      external: true,
+    },
+    { href: "/submit", label: "Solution", cta: true },
+    { href: "/submitSkillBadge", label: "Skill Badge", cta: true },
   ];
 
   return (
@@ -37,58 +43,79 @@ export function Header() {
               height={40}
             />
             <div className="leading-tight">
-              <h1 className="text-lg font-semibold text-gray-900">Google Arcade Cohort 2</h1>
-              <p className="text-xs text-gray-500">Vishnu Institute of Technology</p>
+              <h1 className="text-lg font-semibold text-gray-900">
+                Google Arcade Cohort 2
+              </h1>
+              <p className="text-xs text-gray-500">
+                Vishnu Institute of Technology
+              </p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-x-2">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.href} 
-                href={link.href} 
-                passHref
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                {link.cta ? (
-                  <Button
-                    className={`bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors ${isActive(link.href) ? 'ring-2 ring-blue-800' : ''}`}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-x-4">
+            <div className="flex items-center gap-x-2">
+              {navLinks
+                .filter((link) => !link.cta)
+                .map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
                   >
-                    <Plus className="h-4 w-4" />
-                    {link.label}
-                  </Button>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    className={`text-gray-700 hover:text-blue-600 hover:bg-blue-50 ${isActive(link.href) ? 'font-medium text-blue-600 bg-blue-50' : ''}`}
+                    <Button
+                      variant="ghost"
+                      className={`text-gray-700 hover:text-blue-600 hover:bg-blue-50 ${
+                        isActive(link.href)
+                          ? "font-medium text-blue-600 bg-blue-50"
+                          : ""
+                      }`}
+                    >
+                      {link.label}
+                    </Button>
+                  </Link>
+                ))}
+            </div>
+
+            <div className="flex items-center gap-x-2 ml-4">
+              {navLinks
+                .filter((link) => link.cta)
+                .map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
                   >
-                    {link.label}
-                  </Button>
-                )}
-              </Link>
-            ))}
+                    <Button
+                      className={`bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-2 rounded-md flex items-center gap-2 transition-colors ${
+                        isActive(link.href) ? "ring-2 ring-blue-800" : ""
+                      }`}
+                    >
+                      <Plus className="h-4 w-4" />
+                      {link.label}
+                    </Button>
+                  </Link>
+                ))}
+            </div>
           </nav>
 
           {/* Mobile Navigation */}
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  aria-label="Open menu"
-                >
+                <Button variant="ghost" size="icon" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[350px]">
                 <div className="flex flex-col gap-2 mt-6">
                   {navLinks.map((link) => (
-                    <Link 
-                      key={link.href} 
-                      href={link.href} 
+                    <Link
+                      key={link.href}
+                      href={link.href}
                       onClick={() => setIsOpen(false)}
                       passHref
                       target={link.external ? "_blank" : undefined}
@@ -96,7 +123,9 @@ export function Header() {
                     >
                       {link.cta ? (
                         <Button
-                          className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md flex items-center gap-2 ${isActive(link.href) ? 'ring-2 ring-blue-800' : ''}`}
+                          className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md flex items-center gap-2 ${
+                            isActive(link.href) ? "ring-2 ring-blue-800" : ""
+                          }`}
                         >
                           <Plus className="h-4 w-4" />
                           {link.label}
@@ -104,7 +133,11 @@ export function Header() {
                       ) : (
                         <Button
                           variant="ghost"
-                          className={`w-full justify-start text-gray-700 hover:text-blue-600 hover:bg-blue-50 ${isActive(link.href) ? 'font-medium text-blue-600 bg-blue-50' : ''}`}
+                          className={`w-full justify-start text-gray-700 hover:text-blue-600 hover:bg-blue-50 ${
+                            isActive(link.href)
+                              ? "font-medium text-blue-600 bg-blue-50"
+                              : ""
+                          }`}
                         >
                           {link.label}
                         </Button>
