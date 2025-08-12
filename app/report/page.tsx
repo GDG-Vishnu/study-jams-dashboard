@@ -758,10 +758,10 @@ const DailyReportPage = () => {
                 Google Cloud Skills Boost Cohort 2 Analytics
               </p>
             </div>
-            {/* <div className="flex items-center gap-2 text-sm text-gray-500">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
               <Calendar className="h-4 w-4" />
-              <span>Updated: {new Date().toLocaleDateString()}</span>
-            </div> */}
+              <span>Updated: 11-08-2025</span>
+            </div>
           </div>
         </div>
       </div>

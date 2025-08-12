@@ -288,9 +288,9 @@ export default function SubmitSolution() {
                       className="text-base font-medium text-gray-700"
                     >
                       Posted By
-                      <span className="text-gray-400 font-normal ml-2">
+                      {/* <span className="text-gray-400 font-normal ml-2">
                         (Optional)
-                      </span>
+                      </span> */}
                     </Label>
                     <Input
                       id="postedBy"

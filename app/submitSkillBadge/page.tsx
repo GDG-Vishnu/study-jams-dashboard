@@ -272,9 +272,9 @@ export default function SubmitSkillBadge() {
                       className="text-base font-medium text-gray-700"
                     >
                       Your Name
-                      <span className="text-gray-400 font-normal ml-2">
+                      {/* <span className="text-gray-400 font-normal ml-2">
                         (Optional)
-                      </span>
+                      </span> */}
                     </Label>
                     <Input
                       id="postedBy"
