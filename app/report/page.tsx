@@ -297,153 +297,156 @@ const DataGrid = ({ data }: { data: ReportData[] }) => {
       </div>
 
       {/* Pagination */}
-        <div className="px-4 py-3 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="text-sm text-gray-600 text-center">
-                Showing {startIndex + 1} to {Math.min(startIndex + rowsPerPage, sortedData.length)} of {sortedData.length} entries
-            </div>
-            <div className="flex gap-2 justify-center">
-                <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-                >
-                Previous
-                </button>
-                <span className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm min-w-[60px] text-center">
-                {currentPage} / {totalPages}
-                </span>
-                <button
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-                >
-                Next
-                </button>
-            </div>
+      <div className="px-4 py-3 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="text-sm text-gray-600 text-center">
+          Showing {startIndex + 1} to{" "}
+          {Math.min(startIndex + rowsPerPage, sortedData.length)} of{" "}
+          {sortedData.length} entries
         </div>
-
-      {/* Row Detail Modal */}
-      {selectedRow && (
-  <div
-    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-    onClick={() => setSelectedRow(null)} // Close modal when clicking outside
-  >
-    <div
-      className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
-      onClick={(e) => e.stopPropagation()} // Prevent event bubbling to overlay
-    >
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              {selectedRow.userName}
-            </h3>
-            <p className="text-gray-600">{selectedRow.userEmail}</p>
-          </div>
+        <div className="flex gap-2 justify-center">
           <button
-            onClick={() => setSelectedRow(null)}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
           >
-            <div className="w-10 h-10 flex items-center justify-center text-lg">
-              ×
-            </div>
+            Previous
+          </button>
+          <span className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm min-w-[60px] text-center">
+            {currentPage} / {totalPages}
+          </span>
+          <button
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages, currentPage + 1))
+            }
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          >
+            Next
           </button>
         </div>
       </div>
-      <div className="p-6 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">
-                Skill Badges ({selectedRow.skillBadgesCount})
-              </h4>
-              {selectedRow.skillBadgeNames.length > 0 ? (
-                <ul className="space-y-1">
-                  {selectedRow.skillBadgeNames.map((badge, idx) => (
-                    <li
-                      key={idx}
-                      className="text-sm text-gray-600 flex items-center"
-                    >
-                      <Award className="h-4 w-4 text-blue-500 mr-2" />
-                      {badge}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-400">No skill badges completed</p>
-              )}
+
+      {/* Row Detail Modal */}
+      {selectedRow && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedRow(null)} // Close modal when clicking outside
+        >
+          <div
+            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()} // Prevent event bubbling to overlay
+          >
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {selectedRow.userName}
+                  </h3>
+                  <p className="text-gray-600">{selectedRow.userEmail}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedRow(null)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <div className="w-10 h-10 flex items-center justify-center text-lg">
+                    ×
+                  </div>
+                </button>
+              </div>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">
-                Arcade Games ({selectedRow.arcadeGamesCount})
-              </h4>
-              {selectedRow.arcadeGameNames.length > 0 ? (
-                <ul className="space-y-1">
-                  {selectedRow.arcadeGameNames.map((game, idx) => (
-                    <li
-                      key={idx}
-                      className="text-sm text-gray-600 flex items-center"
-                    >
-                      <Gamepad2 className="h-4 w-4 text-green-500 mr-2" />
-                      {game}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-400">No arcade games completed</p>
-              )}
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">
-                Trivia Games ({selectedRow.triviaGamesCount})
-              </h4>
-              {selectedRow.triviaGameNames.length > 0 ? (
-                <ul className="space-y-1">
-                  {selectedRow.triviaGameNames.map((trivia, idx) => (
-                    <li
-                      key={idx}
-                      className="text-sm text-gray-600 flex items-center"
-                    >
-                      <Brain className="h-4 w-4 text-purple-500 mr-2" />
-                      {trivia}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-400">No trivia games completed</p>
-              )}
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">
-                Lab-free Courses ({selectedRow.labFreeCourseCount})
-              </h4>
-              {selectedRow.labFreeCourseNames.length > 0 ? (
-                <ul className="space-y-1">
-                  {selectedRow.labFreeCourseNames.map((course, idx) => (
-                    <li
-                      key={idx}
-                      className="text-sm text-gray-600 flex items-center"
-                    >
-                      <BookOpen className="h-4 w-4 text-orange-500 mr-2" />
-                      {course}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-400">
-                  No lab-free courses completed
-                </p>
-              )}
+            <div className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Skill Badges ({selectedRow.skillBadgesCount})
+                    </h4>
+                    {selectedRow.skillBadgeNames.length > 0 ? (
+                      <ul className="space-y-1">
+                        {selectedRow.skillBadgeNames.map((badge, idx) => (
+                          <li
+                            key={idx}
+                            className="text-sm text-gray-600 flex items-center"
+                          >
+                            <Award className="h-4 w-4 text-blue-500 mr-2" />
+                            {badge}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-400">No skill badges completed</p>
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Arcade Games ({selectedRow.arcadeGamesCount})
+                    </h4>
+                    {selectedRow.arcadeGameNames.length > 0 ? (
+                      <ul className="space-y-1">
+                        {selectedRow.arcadeGameNames.map((game, idx) => (
+                          <li
+                            key={idx}
+                            className="text-sm text-gray-600 flex items-center"
+                          >
+                            <Gamepad2 className="h-4 w-4 text-green-500 mr-2" />
+                            {game}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-400">No arcade games completed</p>
+                    )}
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Trivia Games ({selectedRow.triviaGamesCount})
+                    </h4>
+                    {selectedRow.triviaGameNames.length > 0 ? (
+                      <ul className="space-y-1">
+                        {selectedRow.triviaGameNames.map((trivia, idx) => (
+                          <li
+                            key={idx}
+                            className="text-sm text-gray-600 flex items-center"
+                          >
+                            <Brain className="h-4 w-4 text-purple-500 mr-2" />
+                            {trivia}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-400">No trivia games completed</p>
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Lab-free Courses ({selectedRow.labFreeCourseCount})
+                    </h4>
+                    {selectedRow.labFreeCourseNames.length > 0 ? (
+                      <ul className="space-y-1">
+                        {selectedRow.labFreeCourseNames.map((course, idx) => (
+                          <li
+                            key={idx}
+                            className="text-sm text-gray-600 flex items-center"
+                          >
+                            <BookOpen className="h-4 w-4 text-orange-500 mr-2" />
+                            {course}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-400">
+                        No lab-free courses completed
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </div>
   );
 };
@@ -760,7 +763,7 @@ const DailyReportPage = () => {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Calendar className="h-4 w-4" />
-              <span>Updated: 11-08-2025</span>
+              <span>Updated: 15-08-2025</span>
             </div>
           </div>
         </div>
