@@ -763,7 +763,7 @@ const DailyReportPage = () => {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Calendar className="h-4 w-4" />
-              <span>Updated: 20-08-2025</span>
+              <span>Updated: 23-08-2025</span>
             </div>
           </div>
         </div>
