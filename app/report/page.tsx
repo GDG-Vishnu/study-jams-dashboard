@@ -512,21 +512,23 @@ const Leaderboard = ({ data }: { data: LeaderboardEntry[] }) => {
               entry.rank
             )} transition-all hover:shadow-md`}
           >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full text-overflow-ellipsis">
               <div className="flex items-center gap-3 mb-3 sm:mb-0">
                 {getRankIcon(entry.rank)}
-                <div>
+                <div className="w-48">
                   <h4 className="font-semibold text-gray-900 text-base sm:text-lg">
                     {entry.userName}
                   </h4>
-                  <p className="text-sm text-gray-600">{entry.userEmail}</p>
+                  <p className="text-sm text-gray-600 text-overflow-ellipsis">
+                    {entry.userEmail}
+                  </p>
                 </div>
               </div>
               <div className="text-right">
                 <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
                   {entry.totalBadges}
                 </div>
-                <div className="text-xs text-gray-500">Total Badges</div>
+                <div className="text-xs text-gray-500 mb-3">Total Badges</div>
               </div>
             </div>
             <div className="mt-2 flex flex-wrap gap-2 text-sm">
