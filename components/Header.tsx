@@ -13,17 +13,15 @@ export function Header() {
 
   const isActive = (path: string) => pathname === path;
 
-  const navLinks = [
+  type NavLink = {
+    href: string;
+    label: string;
+    cta?: boolean;
+    external?: boolean;
+  };
+  const navLinks: NavLink[] = [
     { href: "/", label: "Home" },
     { href: "/report", label: "Daily Report" },
-    { href: "/skillBadges", label: "Skill Badges" },
-    {
-      href: "https://garcade.in/calculator",
-      label: "Arcade Calculator",
-      external: true,
-    },
-    { href: "/submit", label: "Solution", cta: true },
-    { href: "/submitSkillBadge", label: "Skill Badge", cta: true },
   ];
 
   return (
@@ -44,7 +42,7 @@ export function Header() {
             />
             <div className="leading-tight">
               <h1 className="text-lg font-semibold text-gray-900">
-                Google Arcade Cohort 2
+                Gen Ai Study Jams
               </h1>
               <p className="text-xs text-gray-500">
                 Vishnu Institute of Technology

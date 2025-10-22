@@ -17,9 +17,9 @@ const inter = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Google Cloud Arcade Cohort 2 - Lab Solutions",
+  title: "Gen AI Study Jams Cohort 2 - Lab Solutions",
   description:
-    "Find and share YouTube video solutions for Google Cloud Platform lab exercises",
+    "Find and share YouTube video solutions for Gen AI Study Jams lab exercises",
   keywords: ["Google Cloud", "GCP", "Lab Solutions", "YouTube", "Cohort 2"],
 };
 

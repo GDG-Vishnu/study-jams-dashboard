@@ -692,7 +692,102 @@ const DailyReportPage = () => {
   };
 
   useEffect(() => {
-    parseCsvFile();
+    const fetchLeaderboard = async () => {
+      try {
+        const res = await fetch("/api/leaderboard");
+        if (res.ok) {
+          const json = await res.json();
+          if (
+            json &&
+            Array.isArray(json.leaderboard) &&
+            json.leaderboard.length > 0
+          ) {
+            // Convert to LeaderboardEntry[] shape
+            const lb: LeaderboardEntry[] = json.leaderboard.map(
+              (item: any, idx: number) => ({
+                rank: item.rank || idx + 1,
+                userName: item.userName || "",
+                userEmail: item.userEmail || "",
+                totalBadges: item.totalBadges || 0,
+                skillBadges: item.skillBadges || 0,
+                arcadeGames: item.arcadeGames || 0,
+                triviaGames: item.triviaGames || 0,
+                labFreeCourses: item.labFreeCourses || 0,
+              })
+            );
+              setLeaderboardData(lb);
+
+              // If API also saved the original rawRows (CSV-parsed rows), use them to
+              // populate the detailed report table so the DataGrid has rows.
+              if (Array.isArray(json.rawRows) && json.rawRows.length > 0) {
+                const parsedData: ReportData[] = (json.rawRows as any[])
+                  .map((row: any, index: number) => {
+                    const skillBadgesCount =
+                      parseInt(row["# of Skill Badges Completed"]) || 0;
+                    const arcadeGamesCount =
+                      parseInt(row["# of Arcade Games Completed"]) || 0;
+                    const triviaGamesCount =
+                      parseInt(row["# of Trivia Games Completed"]) || 0;
+                    const labFreeCourseCount =
+                      parseInt(row["# of Lab-free Courses Completed"]) || 0;
+                    const skillBadgeNames = parseNameList(
+                      row["Names of Completed Skill Badges"] || ""
+                    );
+                    const arcadeGameNames = parseNameList(
+                      row["Names of Completed Arcade Games"] || ""
+                    );
+                    const triviaGameNames = parseNameList(
+                      row["Names of Completed Trivia Games"] || ""
+                    );
+                    const labFreeCourseNames = parseNameList(
+                      row["Names of Completed Lab-free Courses"] || ""
+                    );
+
+                    return {
+                      id: index + 1,
+                      userName: row["User Name"] || "",
+                      userEmail: row["User Email"] || "",
+                      profileUrl:
+                        row["Google Cloud Skills Boost Profile URL"] || "",
+                      profileStatus: row["Profile URL Status"] || "",
+                      accessCodeRedemption:
+                        row["Access Code Redemption Status"] || "",
+                      milestoneEarned: row["Milestone Earned"] || "None",
+                      skillBadgesCount,
+                      skillBadgeNames,
+                      arcadeGamesCount,
+                      arcadeGameNames,
+                      triviaGamesCount,
+                      triviaGameNames,
+                      labFreeCourseCount,
+                      labFreeCourseNames,
+                      totalBadges:
+                        skillBadgesCount +
+                        arcadeGamesCount +
+                        triviaGamesCount +
+                        labFreeCourseCount,
+                    } as ReportData;
+                  })
+                  .filter((item: ReportData) => Boolean(item.userName));
+
+                setReportData(parsedData);
+                return;
+              }
+          }
+        }
+      } catch (err) {
+        // ignore and fallback to CSV
+        console.warn(
+          "Failed to fetch leaderboard API, falling back to CSV",
+          err
+        );
+      }
+
+      // Fallback: parse CSV
+      parseCsvFile();
+    };
+
+    fetchLeaderboard();
   }, []);
 
   const stats = {
@@ -760,7 +855,7 @@ const DailyReportPage = () => {
                 Daily Progress Report
               </h1>
               <p className="text-gray-600 mt-1">
-                Google Cloud Skills Boost Cohort 2 Analytics
+                Gen AI Study Jams Cohort 2 Analytics
               </p>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
