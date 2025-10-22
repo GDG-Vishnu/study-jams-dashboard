@@ -715,64 +715,64 @@ const DailyReportPage = () => {
                 labFreeCourses: item.labFreeCourses || 0,
               })
             );
-              setLeaderboardData(lb);
+            setLeaderboardData(lb);
 
-              // If API also saved the original rawRows (CSV-parsed rows), use them to
-              // populate the detailed report table so the DataGrid has rows.
-              if (Array.isArray(json.rawRows) && json.rawRows.length > 0) {
-                const parsedData: ReportData[] = (json.rawRows as any[])
-                  .map((row: any, index: number) => {
-                    const skillBadgesCount =
-                      parseInt(row["# of Skill Badges Completed"]) || 0;
-                    const arcadeGamesCount =
-                      parseInt(row["# of Arcade Games Completed"]) || 0;
-                    const triviaGamesCount =
-                      parseInt(row["# of Trivia Games Completed"]) || 0;
-                    const labFreeCourseCount =
-                      parseInt(row["# of Lab-free Courses Completed"]) || 0;
-                    const skillBadgeNames = parseNameList(
-                      row["Names of Completed Skill Badges"] || ""
-                    );
-                    const arcadeGameNames = parseNameList(
-                      row["Names of Completed Arcade Games"] || ""
-                    );
-                    const triviaGameNames = parseNameList(
-                      row["Names of Completed Trivia Games"] || ""
-                    );
-                    const labFreeCourseNames = parseNameList(
-                      row["Names of Completed Lab-free Courses"] || ""
-                    );
+            // If API also saved the original rawRows (CSV-parsed rows), use them to
+            // populate the detailed report table so the DataGrid has rows.
+            if (Array.isArray(json.rawRows) && json.rawRows.length > 0) {
+              const parsedData: ReportData[] = (json.rawRows as any[])
+                .map((row: any, index: number) => {
+                  const skillBadgesCount =
+                    parseInt(row["# of Skill Badges Completed"]) || 0;
+                  const arcadeGamesCount =
+                    parseInt(row["# of Arcade Games Completed"]) || 0;
+                  const triviaGamesCount =
+                    parseInt(row["# of Trivia Games Completed"]) || 0;
+                  const labFreeCourseCount =
+                    parseInt(row["# of Lab-free Courses Completed"]) || 0;
+                  const skillBadgeNames = parseNameList(
+                    row["Names of Completed Skill Badges"] || ""
+                  );
+                  const arcadeGameNames = parseNameList(
+                    row["Names of Completed Arcade Games"] || ""
+                  );
+                  const triviaGameNames = parseNameList(
+                    row["Names of Completed Trivia Games"] || ""
+                  );
+                  const labFreeCourseNames = parseNameList(
+                    row["Names of Completed Lab-free Courses"] || ""
+                  );
 
-                    return {
-                      id: index + 1,
-                      userName: row["User Name"] || "",
-                      userEmail: row["User Email"] || "",
-                      profileUrl:
-                        row["Google Cloud Skills Boost Profile URL"] || "",
-                      profileStatus: row["Profile URL Status"] || "",
-                      accessCodeRedemption:
-                        row["Access Code Redemption Status"] || "",
-                      milestoneEarned: row["Milestone Earned"] || "None",
-                      skillBadgesCount,
-                      skillBadgeNames,
-                      arcadeGamesCount,
-                      arcadeGameNames,
-                      triviaGamesCount,
-                      triviaGameNames,
+                  return {
+                    id: index + 1,
+                    userName: row["User Name"] || "",
+                    userEmail: row["User Email"] || "",
+                    profileUrl:
+                      row["Google Cloud Skills Boost Profile URL"] || "",
+                    profileStatus: row["Profile URL Status"] || "",
+                    accessCodeRedemption:
+                      row["Access Code Redemption Status"] || "",
+                    milestoneEarned: row["Milestone Earned"] || "None",
+                    skillBadgesCount,
+                    skillBadgeNames,
+                    arcadeGamesCount,
+                    arcadeGameNames,
+                    triviaGamesCount,
+                    triviaGameNames,
+                    labFreeCourseCount,
+                    labFreeCourseNames,
+                    totalBadges:
+                      skillBadgesCount +
+                      arcadeGamesCount +
+                      triviaGamesCount +
                       labFreeCourseCount,
-                      labFreeCourseNames,
-                      totalBadges:
-                        skillBadgesCount +
-                        arcadeGamesCount +
-                        triviaGamesCount +
-                        labFreeCourseCount,
-                    } as ReportData;
-                  })
-                  .filter((item: ReportData) => Boolean(item.userName));
+                  } as ReportData;
+                })
+                .filter((item: ReportData) => Boolean(item.userName));
 
-                setReportData(parsedData);
-                return;
-              }
+              setReportData(parsedData);
+              return;
+            }
           }
         }
       } catch (err) {
