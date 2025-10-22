@@ -1,136 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { NextResponse } from "next/server";
 
-interface Solution {
-  _id?: string;
-  id: string;
-  labName: string;
-  videoUrl: string;
-  createdAt: string;
-  difficulty: "Easy" | "Medium" | "Hard";
-  comments?: string; // Optional comments field
-  postedBy?: string;
+// Solutions endpoint removed. Return 410 Gone for any requests to make
+// callers aware that the resource is no longer available.
+
+export async function GET() {
+  return NextResponse.json({ error: "Solutions removed" }, { status: 410 });
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    let client;
-    try {
-      client = await clientPromise;
-    } catch (err) {
-      console.error("MongoDB client not available:", err);
-      return NextResponse.json(
-        { error: "Database not configured" },
-        { status: 503 }
-      );
-    }
-    const db = client.db("gcp_cohort2");
-    const collection = db.collection("solutions");
-
-    const url = new URL(request.url);
-    const search = url.searchParams.get("search");
-
-    let query = {};
-    if (search) {
-      const searchTerm = search.toLowerCase();
-      query = {
-        labName: { $regex: searchTerm, $options: "i" },
-      };
-    }
-
-    // Fetch solutions from the database
-    const solutions = await collection
-      .find(query)
-      .sort({ createdAt: -1 }) // Sort by newest first
-      .toArray();
-
-    // Convert MongoDB _id to string and format the solutions
-    const formattedSolutions = solutions.map((solution) => ({
-      id: solution._id.toString(),
-      labName: solution.labName,
-      videoUrl: solution.videoUrl,
-      createdAt: solution.createdAt,
-      difficulty: solution.difficulty,
-      comments: solution.comments || "",
-      postedBy: solution.postedBy || "",
-    }));
-
-    return NextResponse.json(formattedSolutions);
-  } catch (error) {
-    console.error("Error in GET /api/solutions:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch solutions" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { labName, videoUrl, difficulty, comments, postedBy } = body;
-
-    if (!labName || !videoUrl || !difficulty) {
-      return NextResponse.json(
-        { error: "Lab name, video URL, and difficulty are required" },
-        { status: 400 }
-      );
-    }
-
-    const validDifficulties = ["Easy", "Medium", "Hard"];
-    if (!validDifficulties.includes(difficulty)) {
-      return NextResponse.json(
-        { error: "Invalid difficulty level" },
-        { status: 400 }
-      );
-    }
-
-    // Validate YouTube URL
-    const youtubeRegex =
-      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/)[\w-]+/;
-    if (!youtubeRegex.test(videoUrl)) {
-      return NextResponse.json(
-        { error: "Please provide a valid YouTube URL" },
-        { status: 400 }
-      );
-    }
-
-    let client;
-    try {
-      client = await clientPromise;
-    } catch (err) {
-      console.error("MongoDB client not available:", err);
-      return NextResponse.json(
-        { error: "Database not configured" },
-        { status: 503 }
-      );
-    }
-    const db = client.db("gcp_cohort2");
-    const collection = db.collection("solutions");
-
-    const newSolution = {
-      labName: labName.trim(),
-      videoUrl: videoUrl.trim(),
-      difficulty,
-      comments: comments ? comments.trim() : "", // Store the optional comments
-      postedBy: postedBy ? postedBy.trim() : "", // Store the optional postedBy
-      createdAt: new Date().toISOString(),
-    };
-
-    const result = await collection.insertOne(newSolution);
-    const createdSolution = {
-      id: result.insertedId.toString(),
-      ...newSolution,
-    };
-
-    // console.log(createdSolution);
-
-    return NextResponse.json(createdSolution, { status: 201 });
-  } catch (error) {
-    console.error("Error in POST /api/solutions:", error);
-    return NextResponse.json(
-      { error: "Failed to create solution" },
-      { status: 500 }
-    );
-  }
+export async function POST() {
+  return NextResponse.json(
+    { error: "Solutions endpoint has been removed" },
+    { status: 410 }
+  );
 }

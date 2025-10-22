@@ -55,10 +55,21 @@ interface LeaderboardEntry {
 }
 
 // Custom DataGrid Component
-const DataGrid = ({ data }: { data: ReportData[] }) => {
+const DataGrid = ({
+  data,
+  rankMap: externalRankMap,
+  highlightKey,
+  selectedRow,
+  setSelectedRow,
+}: {
+  data: ReportData[];
+  rankMap?: Map<string, number>;
+  highlightKey?: string | null;
+  selectedRow: ReportData | null;
+  setSelectedRow: (r: ReportData | null) => void;
+}) => {
   const [sortField, setSortField] = useState<keyof ReportData>("totalBadges");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
-  const [selectedRow, setSelectedRow] = useState<ReportData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const rowsPerPage = 10;
@@ -68,6 +79,24 @@ const DataGrid = ({ data }: { data: ReportData[] }) => {
       row.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       row.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Compute overall ranks based on totalBadges (descending) so the table can
+  // display an explicit rank column that matches the leaderboard sorting.
+  // If the parent provides an external rankMap (from the published leaderboard),
+  // prefer that so the cards and table stay in sync.
+  const rankMap = externalRankMap
+    ? externalRankMap
+    : (() => {
+        const m = new Map<string, number>();
+        const overallSorted = [...data].sort(
+          (a, b) => b.totalBadges - a.totalBadges
+        );
+        overallSorted.forEach((u, i) => {
+          const key = (u.userEmail || u.userName || `idx-${i}`).toLowerCase();
+          m.set(key, i + 1);
+        });
+        return m;
+      })();
 
   const sortedData = [...filteredData].sort((a, b) => {
     const aVal = a[sortField];
@@ -87,6 +116,19 @@ const DataGrid = ({ data }: { data: ReportData[] }) => {
   const totalPages = Math.ceil(sortedData.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
   const paginatedData = sortedData.slice(startIndex, startIndex + rowsPerPage);
+
+  // If an external highlightKey is provided, find its index in sortedData and
+  // navigate to the page containing it so the user can see the highlighted row.
+  useEffect(() => {
+    if (!highlightKey) return;
+    const idx = sortedData.findIndex(
+      (r) => (r.userEmail || r.userName || "").toLowerCase() === highlightKey
+    );
+    if (idx >= 0) {
+      const page = Math.floor(idx / rowsPerPage) + 1;
+      setCurrentPage(page);
+    }
+  }, [highlightKey]);
 
   const handleSort = (field: keyof ReportData) => {
     if (sortField === field) {
@@ -152,6 +194,8 @@ const DataGrid = ({ data }: { data: ReportData[] }) => {
         <table className="w-full">
           <thead className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
             <tr>
+              <th className="px-4 py-4 text-left">RANK</th>
+
               <th className="px-4 py-4 text-left">
                 <button
                   onClick={() => handleSort("userName")}
@@ -215,12 +259,25 @@ const DataGrid = ({ data }: { data: ReportData[] }) => {
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((row) => (
+            {paginatedData.map((row, idx) => (
               <tr
                 key={row.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 <td className="px-4 py-4">
+                  <div className="font-semibold text-gray-700">
+                    {startIndex + idx + 1}
+                  </div>
+                </td>
+
+                <td
+                  className={`px-4 py-4 ${
+                    (row.userEmail || row.userName || "").toLowerCase() ===
+                    (highlightKey || "")
+                      ? "bg-yellow-50"
+                      : ""
+                  }`}
+                >
                   <div>
                     <div className="font-medium text-gray-900">
                       {row.userName}
@@ -462,7 +519,14 @@ interface LeaderboardEntry {
   labFreeCourses: number;
 }
 // Leaderboard Component
-const Leaderboard = ({ data }: { data: LeaderboardEntry[] }) => {
+/*
+const Leaderboard = ({
+  data,
+  onSelect,
+}: {
+  data: LeaderboardEntry[];
+  onSelect?: (entry: LeaderboardEntry) => void;
+}) => {
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
@@ -508,9 +572,12 @@ const Leaderboard = ({ data }: { data: LeaderboardEntry[] }) => {
         {data.slice(0, 3).map((entry) => (
           <div
             key={entry.rank}
+            onClick={() => onSelect?.(entry)}
+            role="button"
+            tabIndex={0}
             className={`p-3 rounded-xl border ${getRankBg(
               entry.rank
-            )} transition-all hover:shadow-md`}
+            )} transition-all hover:shadow-md cursor-pointer`}
           >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full text-overflow-ellipsis">
               <div className="flex items-center gap-3 mb-3 sm:mb-0">
@@ -563,13 +630,15 @@ const Leaderboard = ({ data }: { data: LeaderboardEntry[] }) => {
     </div>
   );
 };
-
+*/
 // Main Component
 const DailyReportPage = () => {
   const [reportData, setReportData] = useState<ReportData[]>([]);
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(
     []
   );
+  const [selectedRow, setSelectedRow] = useState<ReportData | null>(null);
+  const [highlightKey, setHighlightKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -703,18 +772,23 @@ const DailyReportPage = () => {
             json.leaderboard.length > 0
           ) {
             // Convert to LeaderboardEntry[] shape
-            const lb: LeaderboardEntry[] = json.leaderboard.map(
-              (item: any, idx: number) => ({
-                rank: item.rank || idx + 1,
-                userName: item.userName || "",
-                userEmail: item.userEmail || "",
-                totalBadges: item.totalBadges || 0,
-                skillBadges: item.skillBadges || 0,
-                arcadeGames: item.arcadeGames || 0,
-                triviaGames: item.triviaGames || 0,
-                labFreeCourses: item.labFreeCourses || 0,
-              })
-            );
+            let lb: LeaderboardEntry[] = json.leaderboard.map((item: any) => ({
+              rank: 0,
+              userName: item.userName || "",
+              userEmail: item.userEmail || "",
+              totalBadges: item.totalBadges || 0,
+              skillBadges: item.skillBadges || 0,
+              arcadeGames: item.arcadeGames || 0,
+              triviaGames: item.triviaGames || 0,
+              labFreeCourses: item.labFreeCourses || 0,
+            }));
+            // sort and assign ranks
+            lb = lb
+              .sort((a, b) => b.totalBadges - a.totalBadges)
+              .map((u, i) => ({
+                ...u,
+                rank: i + 1,
+              }));
             setLeaderboardData(lb);
 
             // If API also saved the original rawRows (CSV-parsed rows), use them to
@@ -919,12 +993,56 @@ const DailyReportPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Leaderboard */}
-          <div className="lg:col-span-1">
-            <Leaderboard data={leaderboardData} />
-          </div>
+     {/*  <div className="lg:col-span-1">
+            <Leaderboard
+              data={leaderboardData}
+              onSelect={(entry) => {
+                // Try to find the corresponding report row by authoritative rank
+                // (so the selection matches the table SNO). The leaderboard's
+                // `entry.rank` is 1-based; find the reportData row whose rank
+                // (from the parent-built rankMap) matches that value.
+                const targetRank = entry.rank;
+                let foundKey: string | null = null;
+
+                // Build a reverse mapping from rank -> report row key
+                for (const r of reportData) {
+                  const k = (r.userEmail || r.userName || "").toLowerCase();
+                  const rk = (() => {
+                    // rankMap is constructed below when rendering DataGrid,
+                    // but we can reconstruct the same logic here from
+                    // leaderboardData: prefer leaderboardData mapping.
+                    const lbMatch = leaderboardData.find(
+                      (e) =>
+                        (e.userEmail || e.userName || "").toLowerCase() === k
+                    );
+                    return lbMatch ? lbMatch.rank : undefined;
+                  })();
+                  if (rk === targetRank) {
+                    foundKey = k;
+                    break;
+                  }
+                }
+
+                if (foundKey) {
+                  setHighlightKey(foundKey);
+                } else {
+                  // Fallback: use email/name match like before
+                  const key = (
+                    entry.userEmail ||
+                    entry.userName ||
+                    ""
+                  ).toLowerCase();
+                  setHighlightKey(key);
+                }
+
+                // Do not open the detail modal on Top-3 click; just highlight.
+                setSelectedRow(null);
+              }}
+            />
+          </div> */}
 
           {/* Data Table */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3 w-full">
             <div className="mb-4">
               <h2 className="text-xl font-semibold text-gray-900">
                 Detailed Progress Report
@@ -933,7 +1051,23 @@ const DailyReportPage = () => {
                 Complete breakdown of all participant progress
               </p>
             </div>
-            <DataGrid data={reportData} />
+            {/* Build a rankMap from the authoritative leaderboardData so cards and table match */}
+            {(() => {
+              const map = new Map<string, number>();
+              leaderboardData.forEach((e) => {
+                const key = (e.userEmail || e.userName || "").toLowerCase();
+                if (key) map.set(key, e.rank);
+              });
+              return (
+                <DataGrid
+                  data={reportData}
+                  rankMap={map}
+                  highlightKey={highlightKey || undefined}
+                  selectedRow={selectedRow}
+                  setSelectedRow={setSelectedRow}
+                />
+              );
+            })()}
           </div>
         </div>
       </div>
