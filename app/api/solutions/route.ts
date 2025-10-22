@@ -14,7 +14,16 @@ interface Solution {
 
 export async function GET(request: NextRequest) {
   try {
-    const client = await clientPromise;
+    let client;
+    try {
+      client = await clientPromise;
+    } catch (err) {
+      console.error("MongoDB client not available:", err);
+      return NextResponse.json(
+        { error: "Database not configured" },
+        { status: 503 }
+      );
+    }
     const db = client.db("gcp_cohort2");
     const collection = db.collection("solutions");
 
@@ -86,7 +95,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const client = await clientPromise;
+    let client;
+    try {
+      client = await clientPromise;
+    } catch (err) {
+      console.error("MongoDB client not available:", err);
+      return NextResponse.json(
+        { error: "Database not configured" },
+        { status: 503 }
+      );
+    }
     const db = client.db("gcp_cohort2");
     const collection = db.collection("solutions");
 
