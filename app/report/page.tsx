@@ -992,54 +992,7 @@ const DailyReportPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Leaderboard */}
-     {/*  <div className="lg:col-span-1">
-            <Leaderboard
-              data={leaderboardData}
-              onSelect={(entry) => {
-                // Try to find the corresponding report row by authoritative rank
-                // (so the selection matches the table SNO). The leaderboard's
-                // `entry.rank` is 1-based; find the reportData row whose rank
-                // (from the parent-built rankMap) matches that value.
-                const targetRank = entry.rank;
-                let foundKey: string | null = null;
-
-                // Build a reverse mapping from rank -> report row key
-                for (const r of reportData) {
-                  const k = (r.userEmail || r.userName || "").toLowerCase();
-                  const rk = (() => {
-                    // rankMap is constructed below when rendering DataGrid,
-                    // but we can reconstruct the same logic here from
-                    // leaderboardData: prefer leaderboardData mapping.
-                    const lbMatch = leaderboardData.find(
-                      (e) =>
-                        (e.userEmail || e.userName || "").toLowerCase() === k
-                    );
-                    return lbMatch ? lbMatch.rank : undefined;
-                  })();
-                  if (rk === targetRank) {
-                    foundKey = k;
-                    break;
-                  }
-                }
-
-                if (foundKey) {
-                  setHighlightKey(foundKey);
-                } else {
-                  // Fallback: use email/name match like before
-                  const key = (
-                    entry.userEmail ||
-                    entry.userName ||
-                    ""
-                  ).toLowerCase();
-                  setHighlightKey(key);
-                }
-
-                // Do not open the detail modal on Top-3 click; just highlight.
-                setSelectedRow(null);
-              }}
-            />
-          </div> */}
+          {/* Leaderboard (temporarily hidden) */}
 
           {/* Data Table */}
           <div className="lg:col-span-3 w-full">
