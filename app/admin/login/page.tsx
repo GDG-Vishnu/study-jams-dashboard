@@ -1,8 +1,8 @@
 "use client";
 
-import AdminUploadPage from "../updateLB/page";
+// Render the admin login form located at /admin/login.tsx (project root)
+import LoginForm from "@/admin/login";
 
 export default function AdminLoginRoute() {
-  // Render the existing admin upload page component from the project root
-  return <AdminUploadPage />;
+  return <LoginForm />;
 }

@@ -7,22 +7,22 @@
       {
         "lab_title": "Creating a Virtual Machine",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/754/labs/584201",
-        "solution_link": "https://youtu.be/oUnQLeuEDs8?si=AOBSgVRYknbJLoZi"
+        "solution_link": "https://youtu.be/3wUSkRhedag?si=Px2EvN3BUh3uQfCL"
       },
       {
         "lab_title": "Creating a Persistent Disk",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/754/labs/584202",
-        "solution_link": "https://youtu.be/um0RpF0k070?si=TN5Lybcdg7PfqX9k"
+        "solution_link": "https://youtu.be/oUnQLeuEDs8?si=AOBSgVRYknbJLoZi"
       },
       {
         "lab_title": "Hosting a Web App on Google Cloud Using Compute Engine",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/754/labs/584203",
-        "solution_link": "https://youtu.be/1F5hAre_YOU?si=NCrAC8Rs8yKlPiET"
+        "solution_link": "https://youtu.be/um0RpF0k070?si=TN5Lybcdg7PfqX9k"
       },
       {
         "lab_title": "⚡ The Basics of Google Cloud Compute: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/focuses/3563?parent=catalog",
-        "solution_link": "https://youtu.be/E2ztBJM9ycY?si=Yc8mGVCUFpJF83Zx"
+        "solution_link": "https://youtu.be/1F5hAre_YOU?si=NCrAC8Rs8yKlPiET"
       }
     ]
   },
@@ -34,22 +34,22 @@
       {
         "lab_title": "APIs Explorer: Cloud Storage",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/725/labs/589886",
-        "solution_link": "https://youtu.be/nnDHTQKhhxY?si=WcoyOOSuGfPa7ulO"
+        "solution_link": "https://youtu.be/E2ztBJM9ycY?si=Yc8mGVCUFpJF83Zx"
       },
       {
         "lab_title": "Cloud Storage: Qwik Start - CLI/SDK",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/725/labs/589887",
-        "solution_link": "https://youtu.be/ROLigBsAx3A?si=6udTPpSAJzljodL3"
+        "solution_link": "https://youtu.be/nnDHTQKhhxY?si=WcoyOOSuGfPa7ulO"
       },
       {
         "lab_title": "Google Cloud Storage - Bucket Lock",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/725/labs/589888",
-        "solution_link": "https://youtu.be/X6DNbZbzKuA?si=gKC-cVtHn_nV8HfD"
+        "solution_link": "https://youtu.be/ROLigBsAx3A?si=6udTPpSAJzljodL3"
       },
       {
         "lab_title": "⚡ Get Started with Cloud Storage: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/725",
-        "solution_link": "https://www.youtube.com/watch?v=84tXuAKLZLY"
+        "solution_link": "https://youtu.be/X6DNbZbzKuA?si=gKC-cVtHn_nV8HfD"
       }
     ]
   },
@@ -61,17 +61,17 @@
       {
         "lab_title": "Pub/Sub: Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/728/labs/594563",
-        "solution_link": "https://www.youtube.com/watch?v=7xwjJYiRzcg"
+        "solution_link": "https://www.youtube.com/watch?v=84tXuAKLZLY"
       },
       {
         "lab_title": "Cloud Scheduler: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/728/labs/594564",
-        "solution_link": "https://www.youtube.com/watch?v=RDLyWHXnr0s"
+        "solution_link": "https://www.youtube.com/watch?v=7xwjJYiRzcg"
       },
       {
         "lab_title": "⚡ Get Started with Pub/Sub: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/728/labs/594565",
-        "solution_link": "https://youtu.be/5Ae2ftnjJfM?si=JAvxe5D1b9kTXU9k"
+        "solution_link": "https://www.youtube.com/watch?v=RDLyWHXnr0s"
       }
     ]
   },
@@ -83,22 +83,22 @@
       {
         "lab_title": "API Gateway: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/662/labs/592574",
-        "solution_link": "https://youtu.be/84tXuAKLZLY?si=aEFdS-NXDZpEJgJD"
+        "solution_link": "https://youtu.be/5Ae2ftnjJfM?si=JAvxe5D1b9kTXU9k"
       },
       {
         "lab_title": "Pub/Sub: Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/662/labs/592575",
-        "solution_link": "https://youtu.be/-8vxVRA2ruk?si=0se4gm0KCFMjCGZl"
+        "solution_link": "https://youtu.be/84tXuAKLZLY?si=aEFdS-NXDZpEJgJD"
       },
       {
         "lab_title": "Cloud Functions Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/662/labs/592576",
-        "solution_link": "https://youtu.be/iWRh0xCKwRQ?si=rYr6iVMdphlLo2dx"
+        "solution_link": "https://youtu.be/-8vxVRA2ruk?si=0se4gm0KCFMjCGZl"
       },
       {
         "lab_title": "⚡ Getting Started with API Gateway: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/662/labs/592577",
-        "solution_link": "https://youtu.be/G9jNga-up70?si=rGWMNfQ4OZKtVBev"
+        "solution_link": "https://youtu.be/iWRh0xCKwRQ?si=rYr6iVMdphlLo2dx"
       }
     ]
   },
@@ -110,22 +110,22 @@
       {
         "lab_title": "Looker Studio: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/647/labs/461640",
-        "solution_link": "https://youtu.be/_mxceD2TSMQ?si=PiZytTMrwMsOb-Ck"
+        "solution_link": "https://youtu.be/G9jNga-up70?si=rGWMNfQ4OZKtVBev"
       },
       {
         "lab_title": "Looker Data Explorer - Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/647/labs/461641",
-        "solution_link": "https://youtu.be/wNgUf8-XfLM?si=dj6YMrz8DH56puVA"
+        "solution_link": "https://youtu.be/_mxceD2TSMQ?si=PiZytTMrwMsOb-Ck"
       },
       {
         "lab_title": "Looker Developer: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/647/labs/461642",
-        "solution_link": "https://youtu.be/iZPo_KTy1RE?si=fEmCBI0cdD9yj9ib"
+        "solution_link": "https://youtu.be/wNgUf8-XfLM?si=dj6YMrz8DH56puVA"
       },
       {
         "lab_title": "⚡ Get Started with Looker: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/647/labs/461643",
-        "solution_link": "https://youtu.be/yDQfs8fNBgM?si=dxLtHaqLEAnK0cNE"
+        "solution_link": "https://youtu.be/iZPo_KTy1RE?si=fEmCBI0cdD9yj9ib"
       }
     ]
   },
@@ -137,22 +137,22 @@
       {
         "lab_title": "Dataplex: Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/726/labs/461568",
-        "solution_link": "https://youtu.be/GVKNYbTUDIU?si=ScRU2-zka352iq_Q"
+        "solution_link": "https://youtu.be/yDQfs8fNBgM?si=dxLtHaqLEAnK0cNE"
       },
       {
         "lab_title": "Dataplex: Qwik Start - Command Line",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/726/labs/461569",
-        "solution_link": "https://youtu.be/s-3nNkkocdo?si=REi-XV7xT45NPWHs"
+        "solution_link": "https://youtu.be/GVKNYbTUDIU?si=ScRU2-zka352iq_Q"
       },
       {
         "lab_title": "Tagging Dataplex Asset",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/726/labs/461570",
-        "solution_link": "https://youtu.be/NzRcltfHzu0?si=OvMVCcr_Go_vmbDp"
+        "solution_link": "https://youtu.be/s-3nNkkocdo?si=REi-XV7xT45NPWHs"
       },
       {
         "lab_title": "⚡ Get Started with Dataplex: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/726/labs/461571",
-        "solution_link": "https://youtu.be/saL_ibySVx4?si=A4FOx4JEwHwLqNQG"
+        "solution_link": "https://youtu.be/NzRcltfHzu0?si=OvMVCcr_Go_vmbDp"
       }
     ]
   },
@@ -164,37 +164,37 @@
       {
         "lab_title": "Gmail: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476311",
-        "solution_link": "https://youtu.be/J8f2jCSZZ78?si=HKQYtFCl4rzvOP0v"
+        "solution_link": "https://youtu.be/saL_ibySVx4?si=A4FOx4JEwHwLqNQG"
       },
       {
         "lab_title": "Google Calendar: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476312",
-        "solution_link": "https://youtu.be/NT4f67Qxkb4?si=LLy3kDqBRRkH6g-o"
+        "solution_link": "https://youtu.be/J8f2jCSZZ78?si=HKQYtFCl4rzvOP0v"
       },
       {
         "lab_title": "Google Meet: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476313",
-        "solution_link": "https://youtu.be/rDmB4_RrOXs?si=28SCSdbEB3UJHN2b"
+        "solution_link": "https://youtu.be/NT4f67Qxkb4?si=LLy3kDqBRRkH6g-o"
       },
       {
         "lab_title": "Google Drive: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476314",
-        "solution_link": "https://youtu.be/VOxyLjNC_4Y?si=-Emuux7ElceB2cdR"
+        "solution_link": "https://youtu.be/rDmB4_RrOXs?si=28SCSdbEB3UJHN2b"
       },
       {
         "lab_title": "Google Sheets: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476315",
-        "solution_link": "https://youtu.be/GHrGaNce6WE?si=xz8ew-v9nv6ySnXT"
+        "solution_link": "https://youtu.be/VOxyLjNC_4Y?si=-Emuux7ElceB2cdR"
       },
       {
         "lab_title": "Google AppSheet: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476316",
-        "solution_link": "https://youtu.be/t93hJjIYUWo?si=w4V2rYb1hXF_Br2r"
+        "solution_link": "https://youtu.be/GHrGaNce6WE?si=xz8ew-v9nv6ySnXT"
       },
       {
         "lab_title": "⚡ Get Started with Google Workspace Tools: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/676/labs/476317",
-        "solution_link": "https://youtu.be/ZGMsodoXp-w?si=q3ZEeMk1HZjVxYxo"
+        "solution_link": "https://youtu.be/t93hJjIYUWo?si=w4V2rYb1hXF_Br2r"
       }
     ]
   },
@@ -206,22 +206,22 @@
       {
         "lab_title": "Google AppSheet: Getting Started",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/635/labs/586897",
-        "solution_link": "https://youtu.be/G9BYYBIjFfg?si=yCzudG4g6uRAfTFe"
+        "solution_link": "https://youtu.be/ZGMsodoXp-w?si=q3ZEeMk1HZjVxYxo"
       },
       {
         "lab_title": "Connect and Configure Data for your AppSheet App",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/635/labs/586898",
-        "solution_link": "https://youtu.be/SQXAjjBPn3A?si=NBrMALlIrSQSYqSD"
+        "solution_link": "https://youtu.be/G9BYYBIjFfg?si=yCzudG4g6uRAfTFe"
       },
       {
         "lab_title": "Publish your AppSheet App",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/635/labs/586899",
-        "solution_link": "https://youtu.be/dDk2luM4EzI?si=Ej3wDo4-MjksHzsU"
+        "solution_link": "https://youtu.be/SQXAjjBPn3A?si=NBrMALlIrSQSYqSD"
       },
       {
         "lab_title": "⚡ App Building with AppSheet: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/635/labs/586900",
-        "solution_link": "https://youtu.be/O2IUvuWqnjs?si=c6wVmVPf3J-UtV-T"
+        "solution_link": "https://youtu.be/dDk2luM4EzI?si=Ej3wDo4-MjksHzsU"
       }
     ]
   },
@@ -233,22 +233,22 @@
       {
         "lab_title": "Develop No-Code Chat Apps with AppSheet",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/715/labs/591610",
-        "solution_link": "https://youtu.be/NuMwtkkdgPU?si=RJ5tl2DjOY6iUaBN"
+        "solution_link": "https://youtu.be/O2IUvuWqnjs?si=c6wVmVPf3J-UtV-T"
       },
       {
         "lab_title": "Introduction to Google Chat Bots with Apps Script",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/715/labs/591611",
-        "solution_link": "https://youtu.be/afvGRQGdDjg?si=tqjhiUUzmzESJvl9"
+        "solution_link": "https://youtu.be/NuMwtkkdgPU?si=RJ5tl2DjOY6iUaBN"
       },
       {
         "lab_title": "Google Apps Script: Access Google Sheets, Maps & Gmail in 4 Lines of Code",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/715/labs/591612",
-        "solution_link": "https://youtu.be/CUDgunty_vU?si=nZVrcLN9UOoSb8yy"
+        "solution_link": "https://youtu.be/afvGRQGdDjg?si=tqjhiUUzmzESJvl9"
       },
       {
         "lab_title": "⚡ Develop with Apps Script and AppSheet: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/715/labs/591613",
-        "solution_link": "https://youtu.be/QDK0Z_dCyDc?si=vzTSSLmZBdZCDiAG"
+        "solution_link": "https://youtu.be/CUDgunty_vU?si=nZVrcLN9UOoSb8yy"
       }
     ]
   },
@@ -260,27 +260,27 @@
       {
         "lab_title": "Deploy Your Website on Cloud Run",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/638/labs/592820",
-        "solution_link": "https://youtu.be/xCN4_jEAlhQ?si=lFcd4TCG3TJSaIyx"
+        "solution_link": "https://youtu.be/QDK0Z_dCyDc?si=vzTSSLmZBdZCDiAG"
       },
       {
         "lab_title": "Host a Web App on Google Cloud Using Compute Engine",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/638/labs/592822",
-        "solution_link": "https://youtu.be/wUY1HeO4EOo?si=LGEiFaqYMjIN_QFF"
+        "solution_link": "https://youtu.be/xCN4_jEAlhQ?si=lFcd4TCG3TJSaIyx"
       },
       {
         "lab_title": "Deploy, Scale, and Update Your Website on Google Kubernetes Engine",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/638/labs/592823",
-        "solution_link": "https://youtu.be/36WC7jipPIo?si=HlknK9VI8024yL0f"
+        "solution_link": "https://youtu.be/wUY1HeO4EOo?si=LGEiFaqYMjIN_QFF"
       },
       {
         "lab_title": "Migrating a Monolithic Website to Microservices on Google Kubernetes Engine",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/638/labs/592824",
-        "solution_link": "https://youtu.be/3NUOcaJ_iJs?si=FpZqSEb8m8uOJRuf"
+        "solution_link": "https://youtu.be/36WC7jipPIo?si=HlknK9VI8024yL0f"
       },
       {
         "lab_title": "⚡ Build a Website on Google Cloud: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/638/labs/592826",
-        "solution_link": "https://youtu.be/su_bKowi7o8?si=fiH4IAAh3XR66CUT"
+        "solution_link": "https://youtu.be/3NUOcaJ_iJs?si=FpZqSEb8m8uOJRuf"
       }
     ]
   },
@@ -292,22 +292,22 @@
       {
         "lab_title": "Networking 101",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/641/labs/594501",
-        "solution_link": "https://youtu.be/Lz6WptOwb68?si=pye4zBfgqnIxwfp3"
+        "solution_link": "https://youtu.be/su_bKowi7o8?si=fiH4IAAh3XR66CUT"
       },
       {
         "lab_title": "Create a Custom Network and Apply Firewall Rules",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/641/labs/594502",
-        "solution_link": "https://youtu.be/vIRgtWCsTfM?si=gncFppTky86nYpHz"
+        "solution_link": "https://youtu.be/Lz6WptOwb68?si=pye4zBfgqnIxwfp3"
       },
       {
         "lab_title": "Test Network Latency Between VMs",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/641/labs/594503",
-        "solution_link": "https://youtu.be/9bYV6Evyvn8?si=0trkOv7aAzNmlJaW"
+        "solution_link": "https://youtu.be/vIRgtWCsTfM?si=gncFppTky86nYpHz"
       },
       {
         "lab_title": "⚡ Set Up a Google Cloud Network: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/641/labs/594504",
-        "solution_link": "https://youtu.be/pRv0jBGJd9w?si=WXbIb4uckgxuFCvw"
+        "solution_link": "https://youtu.be/9bYV6Evyvn8?si=0trkOv7aAzNmlJaW"
       }
     ]
   },
@@ -319,22 +319,22 @@
       {
         "lab_title": "Cloud Storage: Qwik Start - Cloud Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/658/labs/592591",
-        "solution_link": "https://youtu.be/IBHFrTLcTY0?si=44ExRETevM24jXnP"
+        "solution_link": "https://youtu.be/pRv0jBGJd9w?si=WXbIb4uckgxuFCvw"
       },
       {
         "lab_title": "Cloud Run Functions: Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/658/labs/592592",
-        "solution_link": "https://youtu.be/r8pnC0kwt-8?si=oW3qyhCNs432GTDf"
+        "solution_link": "https://youtu.be/IBHFrTLcTY0?si=44ExRETevM24jXnP"
       },
       {
         "lab_title": "Pub/Sub: Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/658/labs/592593",
-        "solution_link": "https://youtu.be/fRMJI5ATs2s?si=NHaCEnBi8KTa6s-U"
+        "solution_link": "https://youtu.be/r8pnC0kwt-8?si=oW3qyhCNs432GTDf"
       },
       {
         "lab_title": "⚡ Store, Process, and Manage Data on Google Cloud: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/658/labs/592594",
-        "solution_link": "https://youtu.be/-8vxVRA2ruk?si=At7WArAJXY33eKQ1"
+        "solution_link": "https://youtu.be/fRMJI5ATs2s?si=NHaCEnBi8KTa6s-U"
       }
     ]
   },
@@ -346,22 +346,22 @@
       {
         "lab_title": "Cloud Functions: Qwik Start - Console",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/696/labs/461616",
-        "solution_link": "https://youtu.be/DzQ8i7t7zyY?si=wuhdwpMdjMcx3MBQ"
+        "solution_link": "https://youtu.be/-8vxVRA2ruk?si=At7WArAJXY33eKQ1"
       },
       {
         "lab_title": "Cloud Functions: Qwik Start - Command Line",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/696/labs/461617",
-        "solution_link": "https://youtu.be/WWFzCrPHsCk?si=rP5fLJNRIVC2i9U8"
+        "solution_link": "https://youtu.be/DzQ8i7t7zyY?si=wuhdwpMdjMcx3MBQ"
       },
       {
         "lab_title": "Cloud Functions 2nd Gen: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/696/labs/461618",
-        "solution_link": "https://youtu.be/fPVslkWDTGg?si=QoaQ75N8TWxvV2mQ"
+        "solution_link": "https://youtu.be/WWFzCrPHsCk?si=rP5fLJNRIVC2i9U8"
       },
       {
         "lab_title": "⚡ Cloud Functions: 3 Ways: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/696/labs/461619",
-        "solution_link": "https://youtu.be/IK1FedYS4RU?si=VIzJJVJdc9LFLCNW"
+        "solution_link": "https://youtu.be/fPVslkWDTGg?si=QoaQ75N8TWxvV2mQ"
       }
     ]
   },
@@ -373,22 +373,22 @@
       {
         "lab_title": "App Engine: Qwik Start - Python",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/671/labs/461532",
-        "solution_link": "https://youtu.be/3cVxYis4Hj8?si=oeIKSnsw3pSqk3J7"
+        "solution_link": "https://youtu.be/IK1FedYS4RU?si=VIzJJVJdc9LFLCNW"
       },
       {
         "lab_title": "App Engine: Qwik Start - Go",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/671/labs/461533",
-        "solution_link": "https://youtu.be/sxlXdG7sLy4?si=PMuHP9CgkafxYidt"
+        "solution_link": "https://youtu.be/3cVxYis4Hj8?si=oeIKSnsw3pSqk3J7"
       },
       {
         "lab_title": "App Engine: Qwik Start - PHP",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/671/labs/461534",
-        "solution_link": "https://youtu.be/rZGeGBXDdfM?si=0bQ_HR0hpUimeRMi"
+        "solution_link": "https://youtu.be/sxlXdG7sLy4?si=PMuHP9CgkafxYidt"
       },
       {
         "lab_title": "⚡ App Engine: 3 Ways: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/671/labs/461535",
-        "solution_link": "https://youtu.be/ZrC1bktIC9I?si=QwvMLUbfZ-qBbQX8"
+        "solution_link": "https://youtu.be/rZGeGBXDdfM?si=0bQ_HR0hpUimeRMi"
       }
     ]
   },
@@ -400,22 +400,22 @@
       {
         "lab_title": "It Speaks! Create Synthetic Speech Using Text-to-Speech",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/700/labs/461580",
-        "solution_link": "https://youtu.be/QIyAKsou5CM?si=oIB9qy3YYYflzYh-"
+        "solution_link": "https://youtu.be/ZrC1bktIC9I?si=QwvMLUbfZ-qBbQX8"
       },
       {
         "lab_title": "Translate Text with the Cloud Translation API",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/700/labs/461581",
-        "solution_link": "https://youtu.be/Hs4Gpdcb5WI?si=-IpuGOghQ0gl29yn"
+        "solution_link": "https://youtu.be/QIyAKsou5CM?si=oIB9qy3YYYflzYh-"
       },
       {
         "lab_title": "Speech to Text Transcription with the Cloud Speech API",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/700/labs/461582",
-        "solution_link": "https://youtu.be/iLn4-TvJXno?si=JIMx7pvPNuYA-9ee"
+        "solution_link": "https://youtu.be/Hs4Gpdcb5WI?si=-IpuGOghQ0gl29yn"
       },
       {
         "lab_title": "⚡ Cloud Speech API 3 Ways: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/700/labs/461583",
-        "solution_link": "https://youtu.be/TO6FqSk_Or8?si=XlYyorRaOqLWAlY6"
+        "solution_link": "https://youtu.be/iLn4-TvJXno?si=JIMx7pvPNuYA-9ee"
       }
     ]
   },
@@ -427,22 +427,22 @@
       {
         "lab_title": "Cloud Monitoring: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/747/labs/461644",
-        "solution_link": "https://youtu.be/zDM2IzpCedM?si=GRJ0yybXqrU9fbDx"
+        "solution_link": "https://youtu.be/TO6FqSk_Or8?si=XlYyorRaOqLWAlY6"
       },
       {
         "lab_title": "Monitoring and Logging for Cloud Functions",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/747/labs/461645",
-        "solution_link": "https://youtu.be/3vNqet2BGr4?si=RFjSaWPz8xht2rBx"
+        "solution_link": "https://youtu.be/zDM2IzpCedM?si=GRJ0yybXqrU9fbDx"
       },
       {
         "lab_title": "Monitor an Apache Web Server using Ops Agent",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/747/labs/461646",
-        "solution_link": "https://youtu.be/cZJn_C_Ry4w?si=tGJNf33M5Y1QJM7y"
+        "solution_link": "https://youtu.be/3vNqet2BGr4?si=RFjSaWPz8xht2rBx"
       },
       {
         "lab_title": "⚡ Monitoring in Google Cloud: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/747/labs/461647",
-        "solution_link": "https://youtu.be/gdTxNBBTrQE?si=7Y7Q9ibQvqmuSwKT"
+        "solution_link": "https://youtu.be/cZJn_C_Ry4w?si=tGJNf33M5Y1QJM7y"
       }
     ]
   },
@@ -454,22 +454,22 @@
       {
         "lab_title": "Cloud Natural Language API: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/634/labs/586893",
-        "solution_link": "https://youtu.be/0OOpG5_lXuM?si=ue7I-i1qram7F0hZ"
+        "solution_link": "https://youtu.be/gdTxNBBTrQE?si=7Y7Q9ibQvqmuSwKT"
       },
       {
         "lab_title": "Speech-to-Text API: Qwik Start",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/634/labs/586894",
-        "solution_link": "https://youtu.be/XsEiolKVH2U?si=TAnFhNcd9tFnafit"
+        "solution_link": "https://youtu.be/0OOpG5_lXuM?si=ue7I-i1qram7F0hZ"
       },
       {
         "lab_title": "Entity and Sentiment Analysis with the Natural Language API",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/634/labs/586895",
-        "solution_link": "https://youtu.be/75FktGg2fSo?si=DH9do3knbGaJlgNW"
+        "solution_link": "https://youtu.be/XsEiolKVH2U?si=TAnFhNcd9tFnafit"
       },
       {
         "lab_title": "⚡ Analyze Speech & Language with Google APIs: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/634/labs/586896",
-        "solution_link": "https://www.youtube.com/watch?v=h8wTc1lBQ7g"
+        "solution_link": "https://youtu.be/75FktGg2fSo?si=DH9do3knbGaJlgNW"
       }
     ]
   },
@@ -481,22 +481,22 @@
       {
         "lab_title": "Generative AI with Vertex AI: Prompt Design",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/976/labs/489805",
-        "solution_link": "https://www.youtube.com/watch?v=e4MpONRtHZw&list=PL5aOhqv5LVIpGYa_pR6PYmUk2kwd60xWC&index=4"
+        "solution_link": "https://www.youtube.com/watch?v=h8wTc1lBQ7g"
       },
       {
         "lab_title": "Get Started with Vertex AI Studio",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/976/labs/489806",
-        "solution_link": "https://www.youtube.com/watch?v=6DMza4gk-AM&list=PL5aOhqv5LVIpGYa_pR6PYmUk2kwd60xWC&index=6"
+        "solution_link": "https://www.youtube.com/watch?v=e4MpONRtHZw&list=PL5aOhqv5LVIpGYa_pR6PYmUk2kwd60xWC&index=4"
       },
       {
         "lab_title": "Getting Started with the Vertex AI Gemini API and Python SDK",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/976/labs/489807",
-        "solution_link": "https://www.youtube.com/watch?v=GZgFW6ZwEG4&list=PL5aOhqv5LVIpGYa_pR6PYmUk2kwd60xWC&index=3"
+        "solution_link": "https://www.youtube.com/watch?v=6DMza4gk-AM&list=PL5aOhqv5LVIpGYa_pR6PYmUk2kwd60xWC&index=6"
       },
       {
         "lab_title": "⚡ Prompt Design in Vertex AI: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/976/labs/489808",
-        "solution_link": "https://www.youtube.com/watch?v=FE40dzAof3M&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK"
+        "solution_link": "https://www.youtube.com/watch?v=GZgFW6ZwEG4&list=PL5aOhqv5LVIpGYa_pR6PYmUk2kwd60xWC&index=3"
       }
     ]
   },
@@ -508,115 +508,111 @@
       {
         "lab_title": "Getting Started with the Vertex AI Gemini API with cURL",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/978/labs/592569",
-        "solution_link": "https://www.youtube.com/watch?v=Be5EKZS7O7c&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK&index=66"
+        "solution_link": "https://www.youtube.com/watch?v=FE40dzAof3M&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK"
       },
       {
         "lab_title": "Introduction to Function Calling with Gemini",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/978/labs/592570",
-        "solution_link": "https://www.youtube.com/watch?v=6OrU5g-EVtE"
+        "solution_link": "https://www.youtube.com/watch?v=Be5EKZS7O7c&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK&index=66"
       },
       {
         "lab_title": "Getting Started with the Vertex AI Gemini API and Python SDK",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/978/labs/488166",
-        "solution_link": "https://www.youtube.com/watch?v=7D105v1SG2U&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK&index=7"
+        "solution_link": "https://www.youtube.com/watch?v=6OrU5g-EVtE"
       },
       {
         "lab_title": "Deploy a Streamlit App Integrated with Gemini Pro on Cloud Run",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/978/labs/488167",
-        "solution_link": "https://www.youtube.com/watch?v=XaP7NQLgCrs&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK&index=9"
+        "solution_link": "https://www.youtube.com/watch?v=7D105v1SG2U&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK&index=7"
       },
       {
         "lab_title": "⚡ Develop GenAI Apps with Gemini and Streamlit: Challenge Lab",
         "lab_link": "https://www.cloudskillsboost.google/course_templates/978/labs/488168",
-        "solution_link": null
+        "solution_link": "https://www.youtube.com/watch?v=XaP7NQLgCrs&list=PLI0vR7P4HGfGakLvUkw_1YIgHgwGFSvqK&index=9"
       }
     ]
   },
   {
-    "course_number": "20",
-    "course_title": "Gen AI Study Jams Game: Level 3",
-    "course_page_link": "https://www.cloudskillsboost.google/games/6554",
-    "labs": [
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive Film-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41108",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive Music-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41109",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive French Language-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41110",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive Spanish Language-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41111",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive Hindi Language-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41112",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive Mandarin Language-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41113",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Chatbot: Interactive Portuguese Language-bot",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41114",
-        "solution_link": null
-      },
-      {
-        "lab_title": "️ Gen AI Study Jams Hero: Building Blocks Cloud Run functions III",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41115",
-        "solution_link": null
-      },
-      {
-        "lab_title": "️ Gen AI Study Jams Hero: Building Blocks Cloud Run functions IV",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41116",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Hero: Enter the VPC",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41117",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Hero: Enter the Source Repository",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41118",
-        "solution_link": null
-      },
-      {
-        "lab_title": "️ Gen AI Study Jams Hero: Building Blocks GCS I",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41119",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Hero: Enter the Storage",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41120",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Gen AI Study Jams Hero: Enter the Cloud Run functions Ruby",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41121",
-        "solution_link": null
-      },
-      {
-        "lab_title": "⚠️ Gen AI Study Jams Hero: Enter the Cloud Run functions Python",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41122",
-        "solution_link": null
-      },
-      {
-        "lab_title": "Required ️ Gen AI Study Jams Hero: Enter the Subnet",
-        "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41123",
-        "solution_link": null
-      }
-    ]
-  }
+  "course_number": "20",
+  "course_title": "Gen AI Arcade Game: Level 3",
+  "course_page_link": "https://www.cloudskillsboost.google/games/6554",
+  "labs": [
+    {
+      "lab_title": "Arcade Chatbot: Interactive Film-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41108",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Chatbot: Interactive Music-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41109",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Chatbot: Interactive French Language-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41110",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Chatbot: Interactive Spanish Language-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41111",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Chatbot: Interactive Hindi Language-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41112",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Chatbot: Interactive Mandarin Language-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41113",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Chatbot: Interactive Portuguese Language-bot",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41114",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Building Blocks Cloud Run functions III",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41115",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Building Blocks Cloud Run functions IV",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41116",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Enter the VPC",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41117",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Enter the Source Repository",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41118",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Building Blocks GCS I",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41119",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Enter the Storage",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41120",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Enter the Cloud Run functions Ruby",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41121",
+      "solution_link": ""
+    },
+    {
+      "lab_title": "Arcade Hero: Enter the Cloud Run functions Python",
+      "lab_link": "https://www.cloudskillsboost.google/games/6554/labs/41122",
+      "solution_link": ""
+    }
+  ]
+}
+
 ]

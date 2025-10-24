@@ -1,5 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/AuthProvider";
 import {
   Upload,
   FileSpreadsheet,
@@ -36,10 +38,16 @@ async function parseXLSX(
 }
 
 const FileUploadPreview = () => {
+  const router = useRouter();
+  const { isAdmin } = useAuth();
+  useEffect(() => {
+    if (!isAdmin) router.push("/admin/login");
+  }, [isAdmin]);
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [previewData, setPreviewData] = useState<Record<string, string>[]>([]);
   const [fullRows, setFullRows] = useState<Record<string, string>[]>([]);
+  const [rawCsvText, setRawCsvText] = useState<string | null>(null);
   const [headers, setHeaders] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -118,6 +126,7 @@ const FileUploadPreview = () => {
     try {
       if (selectedFile.name.endsWith(".csv")) {
         const text = await selectedFile.text();
+        setRawCsvText(text);
         const { headers: csvHeaders, data: csvData } = parseCSV(text);
         setHeaders(csvHeaders);
         setFullRows(csvData);
@@ -133,6 +142,7 @@ const FileUploadPreview = () => {
           setHeaders(parsed.headers);
           setFullRows(parsed.data);
           setPreviewData(parsed.data.slice(0, 3));
+          setRawCsvText(null);
         } catch (err) {
           console.error("Failed to parse XLSX", err);
           setError("Failed to parse XLSX file.");
@@ -176,6 +186,23 @@ const FileUploadPreview = () => {
 
   const [publishStatus, setPublishStatus] = useState<string | null>(null);
 
+  const handleUploadAndView = () => {
+    if (fullRows.length === 0) return;
+    try {
+      if (rawCsvText) {
+        localStorage.setItem("tableDataType", "csv");
+        localStorage.setItem("tableData", rawCsvText);
+      } else {
+        // For parsed XLSX data, save JSON string of the sheet rows
+        localStorage.setItem("tableDataType", "xlsx");
+        localStorage.setItem("tableData", JSON.stringify(fullRows));
+      }
+      router.push("/display");
+    } catch (e) {
+      console.warn("Failed to store table data in localStorage", e);
+    }
+  };
+
   const publishToLeaderboard = async () => {
     if (fullRows.length === 0) return;
     setPublishStatus("publishing");
@@ -188,6 +215,20 @@ const FileUploadPreview = () => {
       const json = await res.json();
       if (res.ok && json.ok) {
         setPublishStatus("success");
+        // Notify other open tabs (report page) that leaderboard was updated so they can re-fetch
+        try {
+          if (typeof BroadcastChannel !== "undefined") {
+            const bc = new BroadcastChannel("leaderboard_updates");
+            bc.postMessage({ type: "leaderboard:updated", ts: Date.now() });
+            bc.close();
+          } else {
+            // fallback for older browsers / contexts
+            localStorage.setItem("leaderboard_updated", Date.now().toString());
+          }
+        } catch (e) {
+          // no-op if notification fails
+          console.warn("notify failed", e);
+        }
       } else {
         setPublishStatus("error");
         console.error("Publish failed", json);

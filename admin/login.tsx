@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/AuthProvider";
 
 import { Eye, EyeOff, AlertCircle, Lock, User, Shield } from "lucide-react";
 
 const LoginForm = () => {
   const router = useRouter();
+  const { login } = useAuth();
   // State for form inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ const LoginForm = () => {
   const VALID_USERNAME = "admin";
   const VALID_PASSWORD = "devteam";
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
@@ -25,7 +27,12 @@ const LoginForm = () => {
     // Simulate a brief delay for loading state
     setTimeout(() => {
       if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-        // Navigate to the admin update leaderboard page
+        // Mark as logged in using global auth and navigate
+        try {
+          login();
+        } catch (e) {
+          // ignore
+        }
         router.push("/admin/updateLB");
         // Optional: clear form state
         setUsername("");
