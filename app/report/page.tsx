@@ -15,6 +15,12 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Header } from "@/components/Header";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 // Helpers to parse cell values safely
 const parseNameList = (names: string) =>
@@ -34,7 +40,10 @@ export default function ReportPage() {
   const [data, setData] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");  // <-- Search state
+  const [searchQuery, setSearchQuery] = useState(""); // <-- Search state
+  const [currentPage, setCurrentPage] = useState(0);
+  const [dateUpdatedISO, setDateUpdatedISO] = useState<string | null>(null);
+  const entriesPerPage = 10;
 
   // Authoritative Google Sheets CSV URL (input box is hidden)
   const SHEET_CSV_URL =
@@ -48,9 +57,15 @@ export default function ReportPage() {
   const accessCodeRedemptions = data.filter(
     (row) => row["Access Code Redemption Status"] === "Yes"
   ).length;
-  const milestonesEarned = data.filter(
-    (row) => row["All Skill Badges & Games Completed"] === "Yes"
-  ).length;
+  // Count participants whose total badges (skill + arcade + trivia + lab) equals 20
+  const milestonesEarned = data.filter((row) => {
+    const totalBadges =
+      parseIntOrZero(row["# of Skill Badges Completed"]) +
+      parseIntOrZero(row["# of Arcade Games Completed"]) +
+      parseIntOrZero(row["# of Trivia Games Completed"] || 0) +
+      parseIntOrZero(row["# of Lab/Free Course Completed"] || 0);
+    return totalBadges === 20;
+  }).length;
 
   // Leaderboard: top 3 by total badges
   const leaderboard = [...data]
@@ -107,6 +122,52 @@ export default function ReportPage() {
   // auto-load authoritative sheet on mount
   useEffect(() => {
     fetchGoogleSheetData(SHEET_CSV_URL);
+    // load dateUpdated from localStorage
+    try {
+      const stored = localStorage.getItem("dateUpdated");
+      if (stored) setDateUpdatedISO(stored);
+    } catch (e) {
+      // ignore
+    }
+
+    // Listen for broadcast channel messages
+    let bc: BroadcastChannel | null = null;
+    try {
+      bc = new BroadcastChannel("leaderboard_updates");
+      bc.onmessage = (ev) => {
+        const msg = ev.data;
+        if (msg && msg.type === "dateUpdated") {
+          setDateUpdatedISO(msg.value);
+        }
+        if (msg && msg.type === "leaderboard:updated") {
+          // re-fetch authoritative data when leaderboard is updated
+          fetchGoogleSheetData(SHEET_CSV_URL);
+        }
+      };
+    } catch (err) {
+      bc = null;
+    }
+
+    // storage event fallback (other tabs)
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "dateUpdated" && e.newValue) {
+        setDateUpdatedISO(e.newValue);
+      }
+      if (e.key === "leaderboard_updates_fallback") {
+        // possible notification — re-fetch
+        fetchGoogleSheetData(SHEET_CSV_URL);
+      }
+    };
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      try {
+        window.removeEventListener("storage", onStorage);
+      } catch (e) {}
+      try {
+        if (bc) bc.close();
+      } catch (e) {}
+    };
   }, []);
 
   // --- SEARCH LOGIC ---
@@ -116,6 +177,24 @@ export default function ReportPage() {
     const query = searchQuery.toLowerCase();
     return userName.includes(query) || userEmail.includes(query);
   });
+
+  // Reset to first page whenever the filter changes
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [searchQuery, filteredData.length]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredData.length / entriesPerPage)
+  );
+  const pageStart = currentPage * entriesPerPage;
+  const pageData = filteredData.slice(pageStart, pageStart + entriesPerPage);
+
+  // Dialog state for showing badges
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<Record<string, string> | null>(
+    null
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -132,7 +211,12 @@ export default function ReportPage() {
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <Calendar className="h-4 w-4" />
-            <span>Updated 10-09-2025</span>
+            <span>
+              Updated{" "}
+              {dateUpdatedISO
+                ? new Date(dateUpdatedISO).toLocaleString()
+                : "N/A"}
+            </span>
           </div>
         </div>
 
@@ -141,7 +225,9 @@ export default function ReportPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{totalUsers}</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {totalUsers}
+                </p>
                 <p className="text-sm text-gray-600 mt-1">Total Participants</p>
               </div>
               <Users className="h-8 w-8 text-blue-500" />
@@ -150,7 +236,9 @@ export default function ReportPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{activeUsers}</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {activeUsers}
+                </p>
                 <p className="text-sm text-gray-600 mt-1">Active Learners</p>
               </div>
               <BookOpen className="h-8 w-8 text-green-500" />
@@ -159,8 +247,12 @@ export default function ReportPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{accessCodeRedemptions}</p>
-                <p className="text-sm text-gray-600 mt-1">Access Code Redemptions</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {accessCodeRedemptions}
+                </p>
+                <p className="text-sm text-gray-600 mt-1">
+                  Access Code Redemptions
+                </p>
               </div>
               <CheckCircle className="h-8 w-8 text-yellow-500" />
             </div>
@@ -168,7 +260,9 @@ export default function ReportPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-semibold text-gray-900">{milestonesEarned}</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {milestonesEarned}
+                </p>
                 <p className="text-sm text-gray-600 mt-1">Milestones Earned</p>
               </div>
               <Award className="h-8 w-8 text-purple-500" />
@@ -181,7 +275,8 @@ export default function ReportPage() {
           <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm w-full mb-6">
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                <Trophy className="h-5 w-5 text-yellow-500 mr-2" /> Top 3 Leaderboard
+                <Trophy className="h-5 w-5 text-yellow-500 mr-2" /> Top 3
+                Leaderboard
               </h3>
               <p className="text-sm text-gray-600 mt-1">
                 Based on Arcade, Trivia, and Skill Badges completions
@@ -195,12 +290,16 @@ export default function ReportPage() {
                 >
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4">
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl font-bold text-gray-700">{entry.rank}</span>
+                      <span className="text-2xl font-bold text-gray-700">
+                        {entry.rank}
+                      </span>
                       <div>
                         <h4 className="font-semibold text-gray-900 text-base sm:text-lg">
                           {entry.userName}
                         </h4>
-                        <p className="text-sm text-gray-600">{entry.userEmail}</p>
+                        <p className="text-sm text-gray-600">
+                          {entry.userEmail}
+                        </p>
                       </div>
                     </div>
                     <div className="text-right">
@@ -212,19 +311,27 @@ export default function ReportPage() {
                     <div className="flex flex-wrap gap-2 text-sm">
                       <div className="flex items-center gap-1">
                         <Award className="h-4 w-4 text-blue-500" />
-                        <span className="text-gray-600">{entry.skillBadges} Skills</span>
+                        <span className="text-gray-600">
+                          {entry.skillBadges} Skills
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Gamepad2 className="h-4 w-4 text-green-500" />
-                        <span className="text-gray-600">{entry.arcadeGames} Arcade</span>
+                        <span className="text-gray-600">
+                          {entry.arcadeGames} Arcade
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Brain className="h-4 w-4 text-purple-500" />
-                        <span className="text-gray-600">{entry.triviaGames} Trivia</span>
+                        <span className="text-gray-600">
+                          {entry.triviaGames} Trivia
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <BookOpen className="h-4 w-4 text-orange-500" />
-                        <span className="text-gray-600">{entry.labFreeCourses} Courses</span>
+                        <span className="text-gray-600">
+                          {entry.labFreeCourses} Courses
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -236,7 +343,7 @@ export default function ReportPage() {
 
         {/* Search UI + Data Table */}
         <div className="w-full mb-8">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col items-center justify-between mb-4 sm:flex-col">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Detailed Progress Report
             </h2>
@@ -272,7 +379,8 @@ export default function ReportPage() {
                 </div>
               ) : filteredData.length === 0 ? (
                 <div className="px-4 py-8 text-center text-gray-600">
-                  No data found. Please check your sheet or try a different search.
+                  No data found. Please check your sheet or try a different
+                  search.
                 </div>
               ) : (
                 <table className="w-full">
@@ -305,13 +413,13 @@ export default function ReportPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredData.map((row, idx) => (
+                    {pageData.map((row, idx) => (
                       <tr
                         key={idx}
                         className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                       >
                         <td className="px-4 py-4 font-semibold text-gray-700">
-                          {idx + 1}
+                          {pageStart + idx + 1}
                         </td>
                         <td className="px-4 py-4 font-medium text-gray-900">
                           {row["User Name"]}
@@ -342,11 +450,19 @@ export default function ReportPage() {
                         </td>
                         <td className="px-4 py-4">
                           <div className="flex gap-2">
-                            <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                            <button
+                              onClick={() => {
+                                setSelectedRow(row);
+                                setIsDialogOpen(true);
+                              }}
+                              className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            >
                               <Eye className="h-4 w-4" />
                             </button>
                             <a
-                              href={row["Google Cloud Skills Boost Profile URL"]}
+                              href={
+                                row["Google Cloud Skills Boost Profile URL"]
+                              }
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
@@ -360,6 +476,125 @@ export default function ReportPage() {
                   </tbody>
                 </table>
               )}
+              {/* Badges dialog */}
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogContent>
+                  <DialogTitle>Badges obtained</DialogTitle>
+                  <DialogDescription>
+                    {selectedRow ? (
+                      <div className="space-y-4 mt-3">
+                        <div>
+                          <h4 className="font-medium">Skill Badges</h4>
+                          <div className="text-sm text-gray-700">
+                            {parseNameList(
+                              selectedRow["Names of Completed Skill Badges"]
+                            ).length > 0 ? (
+                              <ul className="list-disc pl-5 mt-2">
+                                {parseNameList(
+                                  selectedRow["Names of Completed Skill Badges"]
+                                ).map((b, i) => (
+                                  <li key={i}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <div className="text-sm text-gray-500">None</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="font-medium">Arcade Games</h4>
+                          <div className="text-sm text-gray-700">
+                            {parseNameList(
+                              selectedRow["Names of Completed Arcade Games"]
+                            ).length > 0 ? (
+                              <ul className="list-disc pl-5 mt-2">
+                                {parseNameList(
+                                  selectedRow["Names of Completed Arcade Games"]
+                                ).map((b, i) => (
+                                  <li key={i}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <div className="text-sm text-gray-500">None</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="font-medium">Trivia Games</h4>
+                          <div className="text-sm text-gray-700">
+                            {parseNameList(
+                              selectedRow["Names of Completed Trivia Games"] ||
+                                ""
+                            ).length > 0 ? (
+                              <ul className="list-disc pl-5 mt-2">
+                                {parseNameList(
+                                  selectedRow[
+                                    "Names of Completed Trivia Games"
+                                  ] || ""
+                                ).map((b, i) => (
+                                  <li key={i}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <div className="text-sm text-gray-500">None</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="font-medium">Lab / Free Courses</h4>
+                          <div className="text-sm text-gray-700">
+                            {parseNameList(
+                              selectedRow[
+                                "Names of Completed Lab/Free Course"
+                              ] || ""
+                            ).length > 0 ? (
+                              <ul className="list-disc pl-5 mt-2">
+                                {parseNameList(
+                                  selectedRow[
+                                    "Names of Completed Lab/Free Course"
+                                  ] || ""
+                                ).map((b, i) => (
+                                  <li key={i}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <div className="text-sm text-gray-500">None</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t">
+                          <div className="text-sm text-gray-700">
+                            Total badges:{" "}
+                            <span className="font-medium">
+                              {parseIntOrZero(
+                                selectedRow["# of Skill Badges Completed"]
+                              ) +
+                                parseIntOrZero(
+                                  selectedRow["# of Arcade Games Completed"]
+                                ) +
+                                parseIntOrZero(
+                                  selectedRow["# of Trivia Games Completed"] ||
+                                    0
+                                ) +
+                                parseIntOrZero(
+                                  selectedRow[
+                                    "# of Lab/Free Course Completed"
+                                  ] || 0
+                                )}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>No participant selected.</div>
+                    )}
+                  </DialogDescription>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
