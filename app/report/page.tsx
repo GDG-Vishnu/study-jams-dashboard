@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { useDateUpdated } from "@/components/DateUpdatedContext";
 
 // Helpers to parse cell values safely
 const parseNameList = (names: string) =>
@@ -42,7 +43,7 @@ export default function ReportPage() {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState(""); // <-- Search state
   const [currentPage, setCurrentPage] = useState(0);
-  const [dateUpdatedISO, setDateUpdatedISO] = useState<string | null>(null);
+  const { dateUpdated } = useDateUpdated();
   const entriesPerPage = 10;
 
   // Authoritative Google Sheets CSV URL (input box is hidden)
@@ -122,23 +123,12 @@ export default function ReportPage() {
   // auto-load authoritative sheet on mount
   useEffect(() => {
     fetchGoogleSheetData(SHEET_CSV_URL);
-    // load dateUpdated from localStorage
-    try {
-      const stored = localStorage.getItem("dateUpdated");
-      if (stored) setDateUpdatedISO(stored);
-    } catch (e) {
-      // ignore
-    }
-
-    // Listen for broadcast channel messages
+    // Listen for leaderboard update notifications (keep re-fetch behavior)
     let bc: BroadcastChannel | null = null;
     try {
       bc = new BroadcastChannel("leaderboard_updates");
       bc.onmessage = (ev) => {
         const msg = ev.data;
-        if (msg && msg.type === "dateUpdated") {
-          setDateUpdatedISO(msg.value);
-        }
         if (msg && msg.type === "leaderboard:updated") {
           // re-fetch authoritative data when leaderboard is updated
           fetchGoogleSheetData(SHEET_CSV_URL);
@@ -148,11 +138,8 @@ export default function ReportPage() {
       bc = null;
     }
 
-    // storage event fallback (other tabs)
+    // storage event fallback (other tabs) only for leaderboard updates
     const onStorage = (e: StorageEvent) => {
-      if (e.key === "dateUpdated" && e.newValue) {
-        setDateUpdatedISO(e.newValue);
-      }
       if (e.key === "leaderboard_updates_fallback") {
         // possible notification — re-fetch
         fetchGoogleSheetData(SHEET_CSV_URL);
@@ -209,15 +196,7 @@ export default function ReportPage() {
               Gen AI Study Jams Cohort 2 Analytics
             </p>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Calendar className="h-4 w-4" />
-            <span>
-              Updated{" "}
-              {dateUpdatedISO
-                ? new Date(dateUpdatedISO).toLocaleString()
-                : "N/A"}
-            </span>
-          </div>
+      
         </div>
 
         {/* Stats Cards */}
@@ -595,6 +574,35 @@ export default function ReportPage() {
                   </DialogDescription>
                 </DialogContent>
               </Dialog>
+              {/* Pagination controls */}
+              <div className="px-4 py-3 border-t bg-white sm:flex sm:items-center sm:justify-between">
+                <div className="flex items-center justify-center sm:justify-start gap-3">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
+                    disabled={currentPage <= 0}
+                    className="px-3 py-1 rounded-md border bg-white text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Prev
+                  </button>
+                  <span className="mx-2 text-sm text-gray-600">
+                    Page {currentPage + 1} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(totalPages - 1, p + 1))
+                    }
+                    disabled={currentPage >= totalPages - 1}
+                    className="px-3 py-1 rounded-md border bg-white text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+                <div className="mt-2 sm:mt-0 text-sm text-gray-500 text-center sm:text-right">
+                  Showing {pageStart + 1} -{" "}
+                  {Math.min(pageStart + entriesPerPage, filteredData.length)} of{" "}
+                  {filteredData.length}
+                </div>
+              </div>
             </div>
           </div>
         </div>
