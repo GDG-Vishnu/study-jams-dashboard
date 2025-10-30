@@ -69,26 +69,54 @@ export default function ReportPage() {
   }).length;
 
   // Leaderboard: top 3 by total badges
-  const leaderboard = [...data]
-    .map((row, idx) => ({
-      rank: idx + 1,
-      userName: row["User Name"],
-      userEmail: row["User Email"],
-      totalBadges:
+  // Build a global sorted list and ranking map based on Skill + Arcade totals
+  const sortedBySkillArcade = [...data]
+    .map((row) => ({
+      row,
+      skill: parseIntOrZero(row["# of Skill Badges Completed"]),
+      arcade: parseIntOrZero(row["# of Arcade Games Completed"]),
+      totalAll:
         parseIntOrZero(row["# of Skill Badges Completed"]) +
         parseIntOrZero(row["# of Arcade Games Completed"]) +
         parseIntOrZero(row["# of Trivia Games Completed"] || 0) +
         parseIntOrZero(row["# of Lab/Free Course Completed"] || 0),
-      skillBadges: parseIntOrZero(row["# of Skill Badges Completed"]),
-      arcadeGames: parseIntOrZero(row["# of Arcade Games Completed"]),
-      triviaGames: parseIntOrZero(row["# of Trivia Games Completed"] || 0),
-      labFreeCourses: parseIntOrZero(
-        row["# of Lab/Free Course Completed"] || 0
-      ),
-      profileUrl: row["Google Cloud Skills Boost Profile URL"],
     }))
-    .sort((a, b) => b.totalBadges - a.totalBadges)
-    .slice(0, 3);
+    .sort((a, b) => {
+      // primary: skill + arcade
+      const ta = a.skill + a.arcade;
+      const tb = b.skill + b.arcade;
+      if (tb !== ta) return tb - ta;
+      // tie-breaker: higher skill badges
+      if (b.skill !== a.skill) return b.skill - a.skill;
+      // next: higher arcade
+      if (b.arcade !== a.arcade) return b.arcade - a.arcade;
+      // final: total of all badges
+      return b.totalAll - a.totalAll;
+    });
+
+  const rankingMap: Record<string, number> = {};
+  sortedBySkillArcade.forEach((entry, idx) => {
+    const key = (
+      entry.row["User Email"] ||
+      entry.row["User Name"] ||
+      String(idx)
+    ).toString();
+    rankingMap[key] = idx + 1;
+  });
+
+  const leaderboard = sortedBySkillArcade.slice(0, 3).map((entry, idx) => ({
+    rank: idx + 1,
+    userName: entry.row["User Name"],
+    userEmail: entry.row["User Email"],
+    totalBadges: entry.skill + entry.arcade,
+    skillBadges: entry.skill,
+    arcadeGames: entry.arcade,
+    triviaGames: parseIntOrZero(entry.row["# of Trivia Games Completed"] || 0),
+    labFreeCourses: parseIntOrZero(
+      entry.row["# of Lab/Free Course Completed"] || 0
+    ),
+    profileUrl: entry.row["Google Cloud Skills Boost Profile URL"],
+  }));
 
   const fetchGoogleSheetData = async (url?: string) => {
     try {
@@ -158,11 +186,20 @@ export default function ReportPage() {
   }, []);
 
   // --- SEARCH LOGIC ---
-  const filteredData = data.filter((row) => {
+  let filteredData = data.filter((row) => {
     const userName = (row["User Name"] || "").toLowerCase();
     const userEmail = (row["User Email"] || "").toLowerCase();
     const query = searchQuery.toLowerCase();
     return userName.includes(query) || userEmail.includes(query);
+  });
+
+  // Sort filtered results by authoritative rank (skill+arcade)
+  filteredData = filteredData.sort((a, b) => {
+    const keyA = (a["User Email"] || a["User Name"] || "").toString();
+    const keyB = (b["User Email"] || b["User Name"] || "").toString();
+    const ra = rankingMap[keyA] || Number.MAX_SAFE_INTEGER;
+    const rb = rankingMap[keyB] || Number.MAX_SAFE_INTEGER;
+    return ra - rb;
   });
 
   // Reset to first page whenever the filter changes
@@ -196,7 +233,6 @@ export default function ReportPage() {
               Gen AI Study Jams Cohort 2 Analytics
             </p>
           </div>
-      
         </div>
 
         {/* Stats Cards */}
@@ -258,7 +294,7 @@ export default function ReportPage() {
                 Leaderboard
               </h3>
               <p className="text-sm text-gray-600 mt-1">
-                Based on Arcade, Trivia, and Skill Badges completions
+                Based on combined Skill + Arcade badges
               </p>
             </div>
             <div className="p-4 space-y-3">
