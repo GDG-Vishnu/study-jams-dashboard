@@ -1,11 +1,56 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Star, Award, CheckCircle } from "lucide-react";
 
 export default function AchievedTier1Page() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+const handleEmailSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!email || !email.includes("@")) {
+    setMessage("Please enter a valid email address");
+    return;
+  }
+
+  setIsSubmitting(true);
+  setMessage("");
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbzCY5rnwcp6QLt5rutfUtMY_UyEby9uBmchm4SxmhTYRsFJoItFlMOW6_H2InwQHv7t/exec", // Replace with NEW URL from step 1
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain", // Changed to avoid CORS preflight
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.success) {
+      setMessage(
+        "Successfully subscribed! Check your inbox for a confirmation email."
+      );
+      setEmail("");
+    } else {
+      setMessage(result.message || "Something went wrong. Please try again.");
+    }
+  } catch (error) {
+    setMessage("Something went wrong. Please try again later.");
+    console.error("Subscription error:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
   return (
     <div className="min-h-screen bg-[#fafbfc]">
       <Header />
@@ -244,16 +289,38 @@ export default function AchievedTier1Page() {
                 <p className="text-lg mb-4 opacity-90">
                   Get the latest event updates delivered to your inbox
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3">
+                <form
+                  onSubmit={handleEmailSubmit}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
-                    className="flex-1 px-4 py-3 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                    required
+                    disabled={isSubmitting}
+                    className="flex-1 px-4 py-3 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 disabled:opacity-50"
                   />
-                  <button className="bg-white bg-opacity-20 hover:bg-opacity-30 border-2 border-white text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 whitespace-nowrap">
-                    Subscribe
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-white bg-opacity-20 hover:bg-opacity-30 border-2 border-white text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 whitespace-nowrap disabled:opacity-50"
+                  >
+                    {isSubmitting ? "Subscribing..." : "Subscribe"}
                   </button>
-                </div>
+                </form>
+                {message && (
+                  <p
+                    className={`text-sm mt-3 ${
+                      message.includes("Successfully")
+                        ? "text-green-200"
+                        : "text-red-200"
+                    }`}
+                  >
+                    {message}
+                  </p>
+                )}
                 <p className="text-sm mt-3 opacity-75">
                   Stay updated with community events and learning opportunities
                 </p>
