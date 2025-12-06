@@ -19,9 +19,12 @@ export function Header() {
     cta?: boolean;
     external?: boolean;
   };
+  {
+    /* { href: "/", label: "Home" },
+    { href: "/report", label: "Daily Report" },*/
+  }
   const navLinks: NavLink[] = [
-    { href: "/", label: "Home" },
-    { href: "/report", label: "Daily Report" },
+    { href: "/achieved-tier-1", label: "Our Achievement" },
   ];
 
   return (
@@ -29,7 +32,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link
-            href="/"
+            href="/achieved-tier-1"
             className="flex items-center gap-x-3 hover:opacity-80 transition-opacity"
             aria-label="Home"
           >
